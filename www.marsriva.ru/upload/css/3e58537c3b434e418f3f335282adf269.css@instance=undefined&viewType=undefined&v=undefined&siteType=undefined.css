@@ -1,0 +1,31 @@
+*{
+  word-wrap: break-word;
+    word-break: normal;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+:root {
+  --color: #00b1af;
+}
+
+
+@media screen and (min-width: 769px) {
+  #c_grid-116273709439191 > .p_gridbox.signal{
+   
+  top:0px;width:100%;
+  z-index:9;
+ background-color: rgba(255, 255, 255, 0);
+}
+}
+@media screen and (max-width: 768px) {
+.e_categoryB-1 .deep a{
+padding-left:15px;
+}
+  .e_categoryB-1 .p_c_mbtn{
+  background-color:var(--color) !important;
+  border-color:var(--color) !important;
+  }
+}

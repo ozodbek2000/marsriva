@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 54 54" class="design-iconfont">
+  <defs>
+    <linearGradient x1="85.4934403%" y1="85.2007932%" x2="0%" y2="0%" id="hpl0i4c8t__nll6baf0pb">
+      <stop stop-color="#38BD3C" offset="0%"/>
+      <stop stop-color="#83FC90" offset="100%"/>
+    </linearGradient>
+    <linearGradient x1="50%" y1="11.8232295%" x2="50%" y2="100%" id="hpl0i4c8t__j4umimxk2f">
+      <stop stop-color="#FFF" offset="0%"/>
+      <stop stop-color="#D9FADB" offset="100%"/>
+    </linearGradient>
+    <path id="hpl0i4c8t__vod2qaem6a" d="M27 0A27 27 0 1 0 27 54A27 27 0 1 0 27 0Z"/>
+    <path d="M32.8163164,39.0556645 L46.9753631,53.3679696 C46.3111735,53.7833908 45.5452595,54.002291 44.7643497,53.9999819 L10.2336922,53.9999819 C9.45349082,54.002291 8.68828534,53.783152 8.02498131,53.3679696 L22.1830834,39.0556645 L26.6456111,43.0969643 C27.1303809,43.5378084 27.8660669,43.5378084 28.3510729,43.0969643 L32.8163164,39.0556645 Z M6.30824302,24.6796825 L20.2781285,37.3314967 L6.3440207,51.4155918 C6.11382734,50.8798591 5.99551303,50.3017547 5.99645204,49.7175632 L5.99645204,26.2809725 C5.99669381,25.7319912 6.10255088,25.1881422 6.30824302,24.6796825 Z M48.6883819,24.6796825 C48.893897,25.1881422 48.9999951,25.7319912 48.9999951,26.2809725 L48.9999951,49.7189358 C49.0008758,50.3027096 48.8825615,50.8800978 48.6528994,51.4155918 L34.7196772,37.3314967 L48.6883819,24.6796825 Z M44.7643497,22 C45.5805649,21.9988109 46.3794227,22.2391356 47.0620325,22.691438 L32.0583137,36.2812768 L31.9600727,36.3661394 L28.4232187,39.5673468 C27.8962949,40.0435802 27.0994445,40.0435802 26.5727569,39.5668694 L7.93713116,22.6888718 C8.62044944,22.2393744 9.41818546,22 10.2336922,22 L44.7643497,22 Z" id="hpl0i4c8t__fqr5hdvo2e"/>
+    <filter x="-30.2%" y="-34.4%" width="160.5%" height="181.2%" filterUnits="objectBoundingBox" id="hpl0i4c8t__vq3z94ug6d">
+      <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0.756425498 0 0 0 0 0.0476488503 0 0 0 1 0" in="shadowBlurOuter1"/>
+    </filter>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <mask id="hpl0i4c8t__qdm7a23w7c" fill="#fff">
+      <use xlink:href="#hpl0i4c8t__vod2qaem6a"/>
+    </mask>
+    <use fill="url(#hpl0i4c8t__nll6baf0pb)" xlink:href="#hpl0i4c8t__vod2qaem6a"/>
+    <g mask="url(#hpl0i4c8t__qdm7a23w7c)">
+      <use fill="#000" filter="url(#hpl0i4c8t__vq3z94ug6d)" xlink:href="#hpl0i4c8t__fqr5hdvo2e"/>
+      <use fill="url(#hpl0i4c8t__j4umimxk2f)" xlink:href="#hpl0i4c8t__fqr5hdvo2e"/>
+    </g>
+  </g>
+</svg>
