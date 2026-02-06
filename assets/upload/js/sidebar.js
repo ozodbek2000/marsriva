@@ -1,11 +1,22 @@
 $(function () {
-    // 事件
-    $(".zx_btm_o").click(function () {
-        $(this).prev().toggleClass("zx_right");
+    // Возврат наверх
+    $('.p_backtop').click(function () {
+        $('html, body').animate({ scrollTop: 0 }, 1200);
+        return false;
     });
 
-    // 返回顶部
-    $('.p_backtop').removeClass("zx_hi");
+    // Возврат вниз - пересчитываем высоту при каждом клике
+    $('.p_backbottom').click(function () {
+        let pageHeight = $(document).height();
+        let windowHeight = $(window).height();
+        
+        $('html, body').animate({ 
+            scrollTop: pageHeight - windowHeight 
+        }, 1200);
+        return false;
+    });
+
+    // Показ/скрытие кнопки
     $(window).scroll(function () {
         if ($(this).scrollTop() > 100) {
             $('.p_backtop').addClass("zx_hi");
@@ -13,35 +24,22 @@ $(function () {
             $('.p_backtop').removeClass("zx_hi");
         }
     });
-    let llhei = $(document.body).height();
-    $('.p_backtop').click(function () {
-        $('html ,body').animate({ scrollTop: 0 }, {
-        	duration:1200,
-            easing:"easeInOutCubic"
-        });
-        return false;
-    });
-    $('.p_backbottom').click(function () {
-        $('html ,body').animate({ scrollTop: llhei }, {
-        	duration:1200,
-            easing:"easeInOutCubic"
-        });
-        return false;
+
+    // Остальной код...
+    $(".zx_btm_o").click(function () {
+        $(this).prev().toggleClass("zx_right");
     });
 
-    // 添加类名
     $(".zx_type").each(function () {
         var ttt = $(this).text();
         $(this).parent().addClass("zx_" + ttt)
     });
-  
-  	// 获取客户名称并补充到弹出信息
-	$(".zx_haoname").each(function(){
-    	let nametr = $(this).find("span").text();
-      	$(this).next().next(".zx_xjie").find(".zx_zh").prepend("<p class='zx_ts'>" + nametr + "</p>")
+
+    $(".zx_haoname").each(function(){
+        let nametr = $(this).find("span").text();
+        $(this).next().next(".zx_xjie").find(".zx_zh").prepend("<p class='zx_ts'>" + nametr + "</p>")
     });
-  
-    // 微信补充信息
+
     $(".zx_6").find(".zx_zh").prepend("<p class='zx_ts'>扫一扫微信二维码<br>关注我们动态</p>")
     $(".zx_6").find(".s_img").prepend("<p class='zx_bts'>微信二维码</p>")
 });
