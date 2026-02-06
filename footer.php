@@ -28,297 +28,74 @@
                                                     >
                                                         <!-- 导航内容 开始 -->
                                                         <ul class="p_level1Box">
-                                                            <li
+                                                            <?php
+                                                                /**
+                                                                 * Супер оптимизированный вывод - один SQL запрос
+                                                                 */
+
+                                                                // Получаем ВСЕ категории одним запросом
+                                                                $all_categories = get_terms([
+                                                                    'taxonomy'   => 'product_cat',
+                                                                    'hide_empty' => false,
+                                                                    'orderby' => 'term_id',
+                                                                    'order'      => 'ASC',
+                                                                    'exclude' => [15]
+                                                                ]);
+
+                                                                // Группируем по родителям
+                                                                $categories_tree = [];
+                                                                foreach ($all_categories as $cat) {
+                                                                    if ($cat->parent == 0) {
+                                                                        $categories_tree[$cat->term_id] = [
+                                                                            'category' => $cat,
+                                                                            'children' => []
+                                                                        ];
+                                                                    }
+                                                                }
+
+                                                                // Добавляем детей к родителям
+                                                                foreach ($all_categories as $cat) {
+                                                                    if ($cat->parent != 0 && isset($categories_tree[$cat->parent])) {
+                                                                        $categories_tree[$cat->parent]['children'][] = $cat;
+                                                                    }
+                                                                }
+
+                                                                if (!empty($categories_tree)) : ?>
+                                                                        <?php foreach ($categories_tree as $tree_item) : 
+                                                                            $parent_cat = $tree_item['category'];
+                                                                            $children = $tree_item['children'];
+                                                                        ?>
+                                                                            <li class="p_level1Item">
+                                                                                <p class="p_menu1Item s_templatetitle js_editor_click">
+                                                                                    <a href="<?php echo esc_url(get_term_link($parent_cat)); ?>">
+                                                                                        <span><?php echo esc_html($parent_cat->name); ?></span>
+                                                                                    </a>
+                                                                                    <?php if (!empty($children)) : ?>
+                                                                                        <svg t="1625735163067" class="icon p_jtIcon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1486">
+                                                                                            <path d="M661.16183428 486.94732961L415.99871022 219.24359155c-13.37500289-14.59708438-35.98351032-15.54759219-50.51270128-2.24048272-14.59708438 13.37500289-15.54759219 35.98351032-2.24048272 50.51270127l223.09776396 243.60157549-222.89408371 244.28050967c-13.30710947 14.59708438-12.28870823 37.20559179 2.30837613 50.51270125 14.59708438 13.30710947 37.20559179 12.28870823 50.51270128-2.30837613l244.75576356-268.11109855c0.47525392-0.54314733 1.01840124-1.15418807 1.42576173-1.6973354 11.13452018-13.51078973 10.93083994-33.53934734-1.2899749-46.84645682z" p-id="1487"></path>
+                                                                                        </svg>
+                                                                                    <?php endif; ?>
+                                                                                </p>
+                                                                                
+                                                                                <?php if (!empty($children)) : ?>
+                                                                                    <ul class="p_level2Box s_templatesum">
+                                                                                        <?php foreach ($children as $child_cat) : ?>
+                                                                                            <li class="p_level2Item">
+                                                                                                <p class="p_menu2Item js_editor_click">
+                                                                                                    <a href="<?php echo esc_url(get_term_link($child_cat)); ?>">
+                                                                                                        <span><?php echo esc_html($child_cat->name); ?></span>
+                                                                                                    </a>
+                                                                                                </p>
+                                                                                            </li>
+                                                                                        <?php endforeach; ?>
+                                                                                    </ul>
+                                                                                <?php endif; ?>
+                                                                            </li>
+                                                                        <?php endforeach; ?>
+                                                            <?php endif; ?>
+                                                            <!-- <li
                                                                 class="p_level1Item"
                                                             >
-                                                                <!-- 名称 -->
-                                                                <p
-                                                                    class="p_menu1Item s_templatetitle js_editor_click"
-                                                                >
-                                                                    <a>
-                                                                        <span
-                                                                            >Энергия</span
-                                                                        >
-                                                                    </a>
-                                                                    <svg
-                                                                        t="1625735163067"
-                                                                        class="icon p_jtIcon"
-                                                                        viewBox="0 0 1024 1024"
-                                                                        version="1.1"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        p-id="1486"
-                                                                    >
-                                                                        <path
-                                                                            d="M661.16183428 486.94732961L415.99871022 219.24359155c-13.37500289-14.59708438-35.98351032-15.54759219-50.51270128-2.24048272-14.59708438 13.37500289-15.54759219 35.98351032-2.24048272 50.51270127l223.09776396 243.60157549-222.89408371 244.28050967c-13.30710947 14.59708438-12.28870823 37.20559179 2.30837613 50.51270125 14.59708438 13.30710947 37.20559179 12.28870823 50.51270128-2.30837613l244.75576356-268.11109855c0.47525392-0.54314733 1.01840124-1.15418807 1.42576173-1.6973354 11.13452018-13.51078973 10.93083994-33.53934734-1.2899749-46.84645682z"
-                                                                            p-id="1487"
-                                                                        ></path>
-                                                                    </svg>
-                                                                </p>
-                                                                <!-- 子集 -->
-                                                                <ul
-                                                                    class="p_level2Box s_templatesum"
-                                                                >
-                                                                    <li
-                                                                        class="p_level2Item"
-                                                                    >
-                                                                        <!-- 名称 2 -->
-                                                                        <p
-                                                                            class="p_menu2Item js_editor_click"
-                                                                        >
-                                                                            <a
-                                                                                href="Businessproducts/29.html"
-                                                                                target=""
-                                                                            >
-                                                                                <span
-                                                                                    >Солнечные
-                                                                                    инверторы</span
-                                                                                >
-                                                                            </a>
-                                                                        </p>
-                                                                        <!-- 子集 2 -->
-                                                                    </li>
-                                                                    <li
-                                                                        class="p_level2Item"
-                                                                    >
-                                                                        <!-- 名称 2 -->
-                                                                        <p
-                                                                            class="p_menu2Item js_editor_click"
-                                                                        >
-                                                                            <a
-                                                                                href="Businessproducts/35.html"
-                                                                                target=""
-                                                                            >
-                                                                                <span
-                                                                                    >Система
-                                                                                    хранения
-                                                                                    энергии</span
-                                                                                >
-                                                                            </a>
-                                                                        </p>
-                                                                        <!-- 子集 2 -->
-                                                                    </li>
-                                                                    <li
-                                                                        class="p_level2Item"
-                                                                    >
-                                                                        <!-- 名称 2 -->
-                                                                        <p
-                                                                            class="p_menu2Item js_editor_click"
-                                                                        >
-                                                                            <a
-                                                                                href="Businessproducts/36.html"
-                                                                                target=""
-                                                                            >
-                                                                                <span
-                                                                                    >Батареи</span
-                                                                                >
-                                                                            </a>
-                                                                        </p>
-                                                                        <!-- 子集 2 -->
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                            <li
-                                                                class="p_level1Item"
-                                                            >
-                                                                <!-- 名称 -->
-                                                                <p
-                                                                    class="p_menu1Item s_templatetitle js_editor_click"
-                                                                >
-                                                                    <a>
-                                                                        <span
-                                                                            >Системы
-                                                                            ИБП</span
-                                                                        >
-                                                                    </a>
-                                                                    <svg
-                                                                        t="1625735163067"
-                                                                        class="icon p_jtIcon"
-                                                                        viewBox="0 0 1024 1024"
-                                                                        version="1.1"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        p-id="1486"
-                                                                    >
-                                                                        <path
-                                                                            d="M661.16183428 486.94732961L415.99871022 219.24359155c-13.37500289-14.59708438-35.98351032-15.54759219-50.51270128-2.24048272-14.59708438 13.37500289-15.54759219 35.98351032-2.24048272 50.51270127l223.09776396 243.60157549-222.89408371 244.28050967c-13.30710947 14.59708438-12.28870823 37.20559179 2.30837613 50.51270125 14.59708438 13.30710947 37.20559179 12.28870823 50.51270128-2.30837613l244.75576356-268.11109855c0.47525392-0.54314733 1.01840124-1.15418807 1.42576173-1.6973354 11.13452018-13.51078973 10.93083994-33.53934734-1.2899749-46.84645682z"
-                                                                            p-id="1487"
-                                                                        ></path>
-                                                                    </svg>
-                                                                </p>
-                                                                <!-- 子集 -->
-                                                                <ul
-                                                                    class="p_level2Box s_templatesum"
-                                                                >
-                                                                    <li
-                                                                        class="p_level2Item"
-                                                                    >
-                                                                        <!-- 名称 2 -->
-                                                                        <p
-                                                                            class="p_menu2Item js_editor_click"
-                                                                        >
-                                                                            <a
-                                                                                href="Businessproducts/30.html"
-                                                                                target=""
-                                                                            >
-                                                                                <span
-                                                                                    >DC
-                                                                                    ИБП</span
-                                                                                >
-                                                                            </a>
-                                                                        </p>
-                                                                        <!-- 子集 2 -->
-                                                                    </li>
-                                                                    <li
-                                                                        class="p_level2Item"
-                                                                    >
-                                                                        <!-- 名称 2 -->
-                                                                        <p
-                                                                            class="p_menu2Item js_editor_click"
-                                                                        >
-                                                                            <a
-                                                                                href="Businessproducts/68.html"
-                                                                                target=""
-                                                                            >
-                                                                                <span
-                                                                                    >ИБП</span
-                                                                                >
-                                                                            </a>
-                                                                        </p>
-                                                                        <!-- 子集 2 -->
-                                                                    </li>
-                                                                    <li
-                                                                        class="p_level2Item"
-                                                                    >
-                                                                        <!-- 名称 2 -->
-                                                                        <p
-                                                                            class="p_menu2Item js_editor_click"
-                                                                        >
-                                                                            <a
-                                                                                href="Businessproducts/32.html"
-                                                                                target=""
-                                                                            >
-                                                                                <span
-                                                                                    >Стабилизаторы
-                                                                                    напряжения</span
-                                                                                >
-                                                                            </a>
-                                                                        </p>
-                                                                        <!-- 子集 2 -->
-                                                                    </li>
-                                                                    <li
-                                                                        class="p_level2Item"
-                                                                    >
-                                                                        <!-- 名称 2 -->
-                                                                        <p
-                                                                            class="p_menu2Item js_editor_click"
-                                                                        >
-                                                                            <a
-                                                                                href="Businessproducts/69.html"
-                                                                                target=""
-                                                                            >
-                                                                                <span
-                                                                                    >SOHO
-                                                                                    Инверторы</span
-                                                                                >
-                                                                            </a>
-                                                                        </p>
-                                                                        <!-- 子集 2 -->
-                                                                    </li>
-                                                                    <li
-                                                                        class="p_level2Item"
-                                                                    >
-                                                                        <!-- 名称 2 -->
-                                                                        <p
-                                                                            class="p_menu2Item js_editor_click"
-                                                                        >
-                                                                            <a
-                                                                                href="Businessproducts/33.html"
-                                                                                target=""
-                                                                            >
-                                                                                <span
-                                                                                    >Батареи</span
-                                                                                >
-                                                                            </a>
-                                                                        </p>
-                                                                        <!-- 子集 2 -->
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                            <li
-                                                                class="p_level1Item"
-                                                            >
-                                                                <!-- 名称 -->
-                                                                <p
-                                                                    class="p_menu1Item s_templatetitle js_editor_click"
-                                                                >
-                                                                    <a>
-                                                                        <span
-                                                                            >Стеллажи
-                                                                            и
-                                                                            аксессуары</span
-                                                                        >
-                                                                    </a>
-                                                                    <svg
-                                                                        t="1625735163067"
-                                                                        class="icon p_jtIcon"
-                                                                        viewBox="0 0 1024 1024"
-                                                                        version="1.1"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        p-id="1486"
-                                                                    >
-                                                                        <path
-                                                                            d="M661.16183428 486.94732961L415.99871022 219.24359155c-13.37500289-14.59708438-35.98351032-15.54759219-50.51270128-2.24048272-14.59708438 13.37500289-15.54759219 35.98351032-2.24048272 50.51270127l223.09776396 243.60157549-222.89408371 244.28050967c-13.30710947 14.59708438-12.28870823 37.20559179 2.30837613 50.51270125 14.59708438 13.30710947 37.20559179 12.28870823 50.51270128-2.30837613l244.75576356-268.11109855c0.47525392-0.54314733 1.01840124-1.15418807 1.42576173-1.6973354 11.13452018-13.51078973 10.93083994-33.53934734-1.2899749-46.84645682z"
-                                                                            p-id="1487"
-                                                                        ></path>
-                                                                    </svg>
-                                                                </p>
-                                                                <!-- 子集 -->
-                                                                <ul
-                                                                    class="p_level2Box s_templatesum"
-                                                                >
-                                                                    <li
-                                                                        class="p_level2Item"
-                                                                    >
-                                                                        <!-- 名称 2 -->
-                                                                        <p
-                                                                            class="p_menu2Item js_editor_click"
-                                                                        >
-                                                                            <a
-                                                                                href="Businessproducts/61.html"
-                                                                                target=""
-                                                                            >
-                                                                                <span
-                                                                                    >Настенные
-                                                                                    шкафы</span
-                                                                                >
-                                                                            </a>
-                                                                        </p>
-                                                                        <!-- 子集 2 -->
-                                                                    </li>
-                                                                    <li
-                                                                        class="p_level2Item"
-                                                                    >
-                                                                        <!-- 名称 2 -->
-                                                                        <p
-                                                                            class="p_menu2Item js_editor_click"
-                                                                        >
-                                                                            <a
-                                                                                href="Businessproducts/62.html"
-                                                                                target=""
-                                                                            >
-                                                                                <span
-                                                                                    >Напольные
-                                                                                    шкафы</span
-                                                                                >
-                                                                            </a>
-                                                                        </p>
-                                                                        <!-- 子集 2 -->
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                            <li
-                                                                class="p_level1Item"
-                                                            >
-                                                                <!-- 名称 -->
                                                                 <p
                                                                     class="p_menu1Item s_templatetitle js_editor_click"
                                                                 >
@@ -341,14 +118,12 @@
                                                                         ></path>
                                                                     </svg>
                                                                 </p>
-                                                                <!-- 子集 -->
                                                                 <ul
                                                                     class="p_level2Box s_templatesum"
                                                                 >
                                                                     <li
                                                                         class="p_level2Item"
                                                                     >
-                                                                        <!-- 名称 2 -->
                                                                         <p
                                                                             class="p_menu2Item js_editor_click"
                                                                         >
@@ -362,12 +137,10 @@
                                                                                 >
                                                                             </a>
                                                                         </p>
-                                                                        <!-- 子集 2 -->
                                                                     </li>
                                                                     <li
                                                                         class="p_level2Item"
                                                                     >
-                                                                        <!-- 名称 2 -->
                                                                         <p
                                                                             class="p_menu2Item js_editor_click"
                                                                         >
@@ -380,12 +153,10 @@
                                                                                 >
                                                                             </a>
                                                                         </p>
-                                                                        <!-- 子集 2 -->
                                                                     </li>
                                                                     <li
                                                                         class="p_level2Item"
                                                                     >
-                                                                        <!-- 名称 2 -->
                                                                         <p
                                                                             class="p_menu2Item js_editor_click"
                                                                         >
@@ -398,12 +169,10 @@
                                                                                 >
                                                                             </a>
                                                                         </p>
-                                                                        <!-- 子集 2 -->
                                                                     </li>
                                                                     <li
                                                                         class="p_level2Item"
                                                                     >
-                                                                        <!-- 名称 2 -->
                                                                         <p
                                                                             class="p_menu2Item js_editor_click"
                                                                         >
@@ -416,10 +185,9 @@
                                                                                 >
                                                                             </a>
                                                                         </p>
-                                                                        <!-- 子集 2 -->
                                                                     </li>
                                                                 </ul>
-                                                            </li>
+                                                            </li> -->
                                                             <li
                                                                 class="p_level1Item"
                                                             >
@@ -477,7 +245,7 @@
                                                                             class="p_menu2Item js_editor_click"
                                                                         >
                                                                             <a
-                                                                                href="Contact.html"
+                                                                                href="<?= get_permalink( 93 ); ?>"
                                                                                 target=""
                                                                             >
                                                                                 <span
@@ -639,7 +407,7 @@
                                                     <p
                                                         class="e_text-27 s_templatesum"
                                                     >
-                                                        Copyright @ 2025
+                                                        Copyright @ 2026
                                                         Marsriva Technology Co.,
                                                         Ltd. Все права защищены.
                                                     </p>
@@ -675,15 +443,8 @@
                                                                 style="
                                                                     color: #969b9f;
                                                                 "
-                                                                ><a
-                                                                    href="Privacy_Policy.html"
-                                                                    >Политика
-                                                                    конфиденциальности</a
-                                                                >丨<a
-                                                                    href="index.html"
-                                                                    >Условия
-                                                                    использования</a
-                                                                >&nbsp;<a
+                                                                >
+                                                                <a
                                                                     href="https://inweb.uz"
                                                                     target="_blank"
                                                                     >Powered
@@ -1698,6 +1459,9 @@
                     ></div>
                 </div>
             </div>
+            <?php if (!is_front_page()) : ?>
+                <?= get_sidebar(); ?>
+            <?php endif; ?>
 	</div>
 
         <script id="tpltool_ExtractJs">

@@ -51,20 +51,20 @@ $(function () {
     });
 
     // Поиск
-    $('.search_warp').click(function(){
-        if($('.boxForm').hasClass('active')){
-            $('.boxForm').removeClass('active');
-            $navigation.removeClass('active');
-        } else {
-            $('.boxForm').addClass('active');
-            $navigation.addClass('active');
-        }
-    });
+    // $('.search_warp').click(function(){
+    //     if($('.boxForm').hasClass('active')){
+    //         $('.boxForm').removeClass('active');
+    //         $navigation.removeClass('active');
+    //     } else {
+    //         $('.boxForm').addClass('active');
+    //         $navigation.addClass('active');
+    //     }
+    // });
 
-    $('.closeFrom').click(function(){
-        $('.boxForm').removeClass('active');
-        $navigation.removeClass('active');
-    });
+    // $('.closeFrom').click(function(){
+    //     $('.boxForm').removeClass('active');
+    //     $navigation.removeClass('active');
+    // });
 
     // ============================================
     // MOBILE КОД (мой аккордеон)
