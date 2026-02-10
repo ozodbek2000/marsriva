@@ -14,13 +14,17 @@ function marsriva_scripts() {
     wp_enqueue_style( '6f72',      get_template_directory_uri() . "/assets/upload/css/6f7215910b184bd6873d42388538e76c.css", array(), 1 );
     wp_enqueue_style( 'sidebar',   get_template_directory_uri() . "/assets/upload/css/sidebar.css", array(), 1 );
     wp_enqueue_style( 'products',  get_template_directory_uri() . "/assets/css/products.css",           array(), 1 );
-    wp_enqueue_style( 'product-details',  get_template_directory_uri() . "/assets/css/product-details.css",           array(), 1 );
     wp_enqueue_style( 'contact',  get_template_directory_uri() . "/assets/css/contact.css",           array(), 1 );
+    wp_enqueue_style( 'product-details',  get_template_directory_uri() . "/assets/css/product-details.css",           array(), 1 );
+    wp_enqueue_style( 'search',  get_template_directory_uri() . "/assets/css/search.css",           array(), 1 );
+    wp_enqueue_style( 'about',  get_template_directory_uri() . "/assets/css/about.css",           array(), 1 );
 
     wp_enqueue_script( 'bundle',  get_template_directory_uri() . "/assets/npublic/libs/core/bundle.js", array('jquery'), 1, true ); 
+    wp_enqueue_script( 'common', get_template_directory_uri() . "/assets/npublic/commonjs/common.js", array('jquery'), 1, true ); 
+
+
     wp_enqueue_script( 'requirejs-config',  get_template_directory_uri() . "/assets/npublic/libs/core/requirejs-config.js", array('bundle'), 1, true ); 
     
-    wp_enqueue_script( 'common', get_template_directory_uri() . "/assets/npublic/commonjs/common.js", array('jquery', 'bundle'), 1, true ); 
     
     wp_enqueue_script( 'nav-js', get_template_directory_uri() . "/assets/upload/js/nav.js", array('jquery'), 1, true  ); 
     wp_enqueue_script( '9369',   get_template_directory_uri() . "/assets/upload/js/9369ea15214844fba0610aee5ce2161e.js", array('bundle'), 1, true  ); 
@@ -32,6 +36,7 @@ function marsriva_scripts() {
     wp_enqueue_script( 'magnifier.js',   get_template_directory_uri() . "/assets/npublic/libs/widget/magnifier.js", array('bundle'),   1, true  ); 
     
     wp_enqueue_script( 'thumbnail-handler',  get_template_directory_uri() . "/assets/upload/js/thumbnail-handler.js", array('jquery'), 1, true ); 
+    wp_enqueue_script( 'validation',  get_template_directory_uri() . "/assets/upload/js/validation.js", array('jquery'), 1, true ); 
 
 }
 

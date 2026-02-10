@@ -62,6 +62,9 @@ $(".e_container-49 .e_text-54").click(function () {
     }
 });
 
+$(".e_button-48").click(() => $("#c_popbox-1711095708841").toggleClass('fixed').show());
+$(".p_close").click(() => $("#c_popbox-1711095708841").removeClass('fixed').hide());
+
 const $pageName = pageObj.name;
 const $pageLink = window.location.href;
 $("[data-pagelink] input").val($pageLink);

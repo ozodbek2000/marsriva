@@ -146,8 +146,8 @@
         <div class="main">
 
 		<?php
-		$page_id = get_the_ID();
-		$position_style = ($page_id == 9 || $page_id == 6) ? '' : 'position: absolute; background-image: none;';
+			$page_id = get_the_ID();
+			$position_style = ($page_id == 124) ? 'background: url(' . get_template_directory_uri() . '/omo-oss-image1.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/d891438d-250c-41ae-b9e5-c4a3b9c02bff.webp);' : 'position: absolute; background-image: none;';
 		?>
 		<div id="c_navigation_126_P_636-1706844067715" style="<?= $position_style ?>">
 			<div class="e_container-21 s_layout fIxBox">
@@ -350,31 +350,28 @@
 					</div>
 				</div>
 			</div>
-			<form class="e_form-28 s_form_layout1 boxForm" needjs="true">
+			<form class="e_form-28 s_form_layout1 boxForm" method="GET" action="/poisk/">
 				<div class="cbox-28-0 p_formItem">
-					<div
-						class="e_input-29 s_form1 form-group"
-						needjs="true"
-					>
+					<div class="e_input-29 s_form1 form-group">
 						<div class="">
 							<div class="input-group">
 								<input
 									type="text"
 									class="form-control s_form-control s_input p_input"
-									name="e_input-29"
+									name="query"
 									placeholder="Пожалуйста введите ключевые слова поиска"
+									required
 								/>
 								<div class="invalid-feedback"></div>
 							</div>
 						</div>
 					</div>
-					<a
+					<button
+						type="submit"
 						class="e_formBtn-30 s_button1 btn btn-primary"
-						href="javascript:;"
-						needjs="true"
 					>
 						<span>Поиск</span>
-					</a>
+					</button>
 					<div class="closeFrom">
 						<svg
 							t="1642239469515"
@@ -393,11 +390,6 @@
 						</svg>
 					</div>
 				</div>
-				<input
-					name="jumpPage"
-					type="hidden"
-					value="/Search.html?Search=undefined"
-				/>
 			</form>
 			<input
 				type="hidden"

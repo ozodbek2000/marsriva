@@ -67,9 +67,7 @@
                                                                         ?>
                                                                             <li class="p_level1Item">
                                                                                 <p class="p_menu1Item s_templatetitle js_editor_click">
-                                                                                    <a href="<?php echo esc_url(get_term_link($parent_cat)); ?>">
-                                                                                        <span><?php echo esc_html($parent_cat->name); ?></span>
-                                                                                    </a>
+                                                                                    <span><?php echo esc_html($parent_cat->name); ?></span>
                                                                                     <?php if (!empty($children)) : ?>
                                                                                         <svg t="1625735163067" class="icon p_jtIcon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1486">
                                                                                             <path d="M661.16183428 486.94732961L415.99871022 219.24359155c-13.37500289-14.59708438-35.98351032-15.54759219-50.51270128-2.24048272-14.59708438 13.37500289-15.54759219 35.98351032-2.24048272 50.51270127l223.09776396 243.60157549-222.89408371 244.28050967c-13.30710947 14.59708438-12.28870823 37.20559179 2.30837613 50.51270125 14.59708438 13.30710947 37.20559179 12.28870823 50.51270128-2.30837613l244.75576356-268.11109855c0.47525392-0.54314733 1.01840124-1.15418807 1.42576173-1.6973354 11.13452018-13.51078973 10.93083994-33.53934734-1.2899749-46.84645682z" p-id="1487"></path>
@@ -93,101 +91,7 @@
                                                                             </li>
                                                                         <?php endforeach; ?>
                                                             <?php endif; ?>
-                                                            <!-- <li
-                                                                class="p_level1Item"
-                                                            >
-                                                                <p
-                                                                    class="p_menu1Item s_templatetitle js_editor_click"
-                                                                >
-                                                                    <a>
-                                                                        <span
-                                                                            >Поддержка</span
-                                                                        >
-                                                                    </a>
-                                                                    <svg
-                                                                        t="1625735163067"
-                                                                        class="icon p_jtIcon"
-                                                                        viewBox="0 0 1024 1024"
-                                                                        version="1.1"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        p-id="1486"
-                                                                    >
-                                                                        <path
-                                                                            d="M661.16183428 486.94732961L415.99871022 219.24359155c-13.37500289-14.59708438-35.98351032-15.54759219-50.51270128-2.24048272-14.59708438 13.37500289-15.54759219 35.98351032-2.24048272 50.51270127l223.09776396 243.60157549-222.89408371 244.28050967c-13.30710947 14.59708438-12.28870823 37.20559179 2.30837613 50.51270125 14.59708438 13.30710947 37.20559179 12.28870823 50.51270128-2.30837613l244.75576356-268.11109855c0.47525392-0.54314733 1.01840124-1.15418807 1.42576173-1.6973354 11.13452018-13.51078973 10.93083994-33.53934734-1.2899749-46.84645682z"
-                                                                            p-id="1487"
-                                                                        ></path>
-                                                                    </svg>
-                                                                </p>
-                                                                <ul
-                                                                    class="p_level2Box s_templatesum"
-                                                                >
-                                                                    <li
-                                                                        class="p_level2Item"
-                                                                    >
-                                                                        <p
-                                                                            class="p_menu2Item js_editor_click"
-                                                                        >
-                                                                            <a
-                                                                                href="Solar_Inverter_Selector.html"
-                                                                                target=""
-                                                                            >
-                                                                                <span
-                                                                                    >Выбор
-                                                                                    продуктов</span
-                                                                                >
-                                                                            </a>
-                                                                        </p>
-                                                                    </li>
-                                                                    <li
-                                                                        class="p_level2Item"
-                                                                    >
-                                                                        <p
-                                                                            class="p_menu2Item js_editor_click"
-                                                                        >
-                                                                            <a
-                                                                                href="Downloads/2356.html"
-                                                                                target=""
-                                                                            >
-                                                                                <span
-                                                                                    >Загрузки</span
-                                                                                >
-                                                                            </a>
-                                                                        </p>
-                                                                    </li>
-                                                                    <li
-                                                                        class="p_level2Item"
-                                                                    >
-                                                                        <p
-                                                                            class="p_menu2Item js_editor_click"
-                                                                        >
-                                                                            <a
-                                                                                href="FAQS/2.html"
-                                                                                target=""
-                                                                            >
-                                                                                <span
-                                                                                    >FAQs</span
-                                                                                >
-                                                                            </a>
-                                                                        </p>
-                                                                    </li>
-                                                                    <li
-                                                                        class="p_level2Item"
-                                                                    >
-                                                                        <p
-                                                                            class="p_menu2Item js_editor_click"
-                                                                        >
-                                                                            <a
-                                                                                href="news_1/1.html"
-                                                                                target=""
-                                                                            >
-                                                                                <span
-                                                                                    >Блог</span
-                                                                                >
-                                                                            </a>
-                                                                        </p>
-                                                                    </li>
-                                                                </ul>
-                                                            </li> -->
+                                                            
                                                             <li
                                                                 class="p_level1Item"
                                                             >
@@ -504,21 +408,7 @@
                                                     >
                                                 </p>
 
-                                                <p style="text-align: center">
-                                                    <span style="line-height: 2"
-                                                        >Вы можете просмотреть
-                                                        другие разделы или
-                                                        вернуться<a
-                                                            href="index.html"
-                                                            ><span
-                                                                style="
-                                                                    color: #ff0000;
-                                                                "
-                                                                >Главная</span
-                                                            ></a
-                                                        ></span
-                                                    >
-                                                </p>
+                                                
                                             </div>
                                         </div>
                                     </div>

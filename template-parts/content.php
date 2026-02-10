@@ -265,17 +265,38 @@
                             <div class="cbox-2-0 p_item">
                                 <h1 class="e_h1-3 s_subtitle"><?= the_title(); ?></h1>
                                 <div class="e_container-92 s_layout">
-                                    <div class="cbox-92-0 p_item">
-                                        <p class="e_h1-44 s_subtitle">
-                                            Держать Wi-Fi включенным
-                                        </p>
-                                    </div>
-                                    <div class="cbox-92-1 p_item">
-                                        <p class="e_h1-46 s_subtitle">
-                                            Мощность: 18 Вт (макс.) или 36 Вт
-                                            (макс.)
-                                        </p>
-                                    </div>
+                                <div class="e_container-92 s_layout">
+                                    <?php
+                                        global $product;
+                                        
+                                        if ($product && $product->get_short_description()) {
+                                            // Получаем краткое описание
+                                            $short_description = $product->get_short_description();
+                                            
+                                            // Удаляем HTML теги и разбиваем на строки
+                                            $short_description = strip_tags($short_description);
+                                            $lines = array_filter(array_map('trim', explode("\n", $short_description)));
+                                            
+                                            // Если есть строки, выводим их
+                                            if (!empty($lines)) {
+                                                $counter = 0;
+                                                foreach ($lines as $line) {
+                                                    if (!empty($line)) {
+                                                        ?>
+                                                        <div class="cbox-92-<?php echo $counter; ?> p_item">
+                                                            <p class="e_h1-<?php echo (44 + $counter * 2); ?> s_subtitle response-transition">
+                                                                <?php echo esc_html($line); ?>
+                                                            </p>
+                                                        </div>
+                                                        <?php
+                                                        $counter++;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                    ?>
+                                </div>
                                 </div>
                                 <hr class="e_line-45 s_line" />
                                 <div class="e_productTabList-93" needjs="true">
@@ -326,6 +347,9 @@
                                                         p {
                                                         text-align: left;
                                                         margin: 0;
+                                                    }
+                                                    .post-navigation {
+                                                        display: none;
                                                     }
                                                 </style>
                                                 <div
@@ -582,384 +606,7 @@
                                             
                                             <?php endwhile; ?>
                                         <?php endif; ?>
-                                        <!-- <div class="Products_box top"
-                                            products_box="Products_box"
-                                            top="" >
-                                            <div>
-                                                <img
-                                                    class="image_resized"
-                                                    style="width: 100%"
-                                                    src="<?= bloginfo("template_url"); ?>/omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/921a01b1-8f12-40c0-baaa-f5671c0935e0.jpg"
-                                                    id="1840577633870733312"
-                                                />
-                                            </div>
-                                            <div
-                                                class="max-width-1600"
-                                                style="top: 50px"
-                                                max-width-1600=""
-                                            >
-                                                <p>
-                                                    <span
-                                                        style="font-size: 48px"
-                                                        ><strong
-                                                            >Умный Мини ИБП
-                                                            Постоянного
-                                                            тока</strong
-                                                        ></span
-                                                    >
-                                                </p>
-                                                <h5 style="text-align: center">
-                                                    <span
-                                                        style="
-                                                            color: #ffffff;
-                                                            font-size: 28px;
-                                                        "
-                                                        >Серия KP3 | Непрерывное
-                                                        питание Wi-Fi</span
-                                                    >
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div class="Products_box top"
-                                            products_box="Products_box"
-                                            top="" >
-                                                <div>
-                                                    <img
-                                                        class="image_resized"
-                                                        style="width: 100%"
-                                                        src="<?= bloginfo("template_url"); ?>/omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/dbd042f5-c4c6-46a1-88e3-af72a024133d.jpg"
-                                                        id="1840577620619194368"
-                                                    />
-                                                </div>
-                                                <div
-                                                    class="max-width-1600"
-                                                    style="top: 50px"
-                                                    max-width-1600=""
-                                                >
-                                                    <p>&nbsp;</p>
-                                                    <h5
-                                                        style="
-                                                            text-align: center;
-                                                        "
-                                                    >
-                                                        &nbsp;
-                                                    </h5>
-                                                </div>
-                                        </div>
-                                        <div class="Products_box top"
-                                            products_box="Products_box"
-                                            top="" >
-                                                    <div>
-                                                        <img
-                                                            class="image_resized"
-                                                            style="width: 100%"
-                                                            src="<?= bloginfo("template_url"); ?>/omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/058b8592-5e07-4b43-9573-372ec5d186b7.jpg"
-                                                            id="1840577608127258624"
-                                                        />
-                                                    </div>
-                                                    <div
-                                                        class="max-width-1600"
-                                                        style="top: 50px"
-                                                        max-width-1600=""
-                                                    >
-                                                        <p>
-                                                            <span
-                                                                style="
-                                                                    color: #000000;
-                                                                    font-size: 48px;
-                                                                "
-                                                                ><strong
-                                                                    >Переключение
-                                                                    AC/DC за 0
-                                                                    мс</strong
-                                                                ></span
-                                                            >
-                                                        </p>
-                                                        <h5
-                                                            style="
-                                                                text-align: center;
-                                                            "
-                                                        >
-                                                            <span
-                                                                style="
-                                                                    color: #000000;
-                                                                    font-size: 20px;
-                                                                "
-                                                                ><span
-                                                                    style="
-                                                                        line-height: 1;
-                                                                    "
-                                                                    >Обеспечение
-                                                                    бесперебойной
-                                                                    работы ваших
-                                                                    устройств
-                                                                    при
-                                                                    переключении
-                                                                    ИБП из
-                                                                    режима AC в
-                                                                    режим
-                                                                    батареи</span
-                                                                ></span
-                                                            >
-                                                        </h5>
-                                                    </div>
-                                        </div>
-                                        <div class="Products_box top"
-                                            products_box="Products_box"
-                                            top="" >
-                                                        <div>
-                                                            <img
-                                                                class="image_resized"
-                                                                style="
-                                                                    width: 100%;
-                                                                "
-                                                                src="<?= bloginfo("template_url"); ?>/omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/517541b4-5ae7-4d40-bfbb-636f56fb07c6.jpg"
-                                                                id="1840577595531821056"
-                                                            />
-                                                        </div>
-                                                        <div
-                                                            class="max-width-1600"
-                                                            style="top: 50px"
-                                                            max-width-1600=""
-                                                        >
-                                                            <p>
-                                                                <span
-                                                                    style="
-                                                                        color: #000000;
-                                                                        font-size: 48px;
-                                                                    "
-                                                                    ><span
-                                                                        style="
-                                                                            line-height: 1;
-                                                                        "
-                                                                        ><strong
-                                                                            >Типичные
-                                                                            сценарии
-                                                                            применения</strong
-                                                                        ></span
-                                                                    ></span
-                                                                >
-                                                            </p>
-                                                            <h5
-                                                                style="
-                                                                    text-align: center;
-                                                                "
-                                                            >
-                                                                <span
-                                                                    style="
-                                                                        color: #000000;
-                                                                        font-size: 20px;
-                                                                    "
-                                                                    ><span
-                                                                        style="
-                                                                            line-height: 1;
-                                                                        "
-                                                                        >Питание
-                                                                        беспроводного
-                                                                        маршрутизатора
-                                                                        и
-                                                                        модема</span
-                                                                    ></span
-                                                                >
-                                                            </h5>
-                                                        </div>
-                                        </div>
-                                        <div class="Products_box top"
-                                            products_box="Products_box"
-                                            top="" >
-                                                            <div>
-                                                                <img
-                                                                    class="image_resized"
-                                                                    style="
-                                                                        width: 100%;
-                                                                    "
-                                                                    src="<?= bloginfo("template_url"); ?>/omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/9d09b7b9-fb40-48a9-9619-82a77e5b38b3.jpg"
-                                                                    id="1840577583276064768"
-                                                                />
-                                                            </div>
-                                                            <div
-                                                                class="max-width-1600"
-                                                                style="
-                                                                    top: 50px;
-                                                                "
-                                                                max-width-1600=""
-                                                            >
-                                                                <p>
-                                                                    <span
-                                                                        style="
-                                                                            color: #000000;
-                                                                            font-size: 48px;
-                                                                        "
-                                                                        ><strong
-                                                                            >Размещение
-                                                                            в
-                                                                            любом
-                                                                            месте</strong
-                                                                        ></span
-                                                                    >
-                                                                </p>
-                                                                <h5
-                                                                    style="
-                                                                        text-align: center;
-                                                                    "
-                                                                >
-                                                                    <span
-                                                                        style="
-                                                                            color: #000000;
-                                                                            font-size: 20px;
-                                                                        "
-                                                                        ><span
-                                                                            style="
-                                                                                line-height: 1;
-                                                                            "
-                                                                            >Благодаря
-                                                                            настенным
-                                                                            крепежным
-                                                                            отверстиям
-                                                                            на
-                                                                            задней
-                                                                            панели
-                                                                            вы
-                                                                            можете
-                                                                            легко
-                                                                            установить
-                                                                            серию
-                                                                            KP3
-                                                                            на
-                                                                            стену</span
-                                                                        ></span
-                                                                    >
-                                                                </h5>
-                                                            </div>
-                                        </div>
-                                        <div class="Products_box top"
-                                            products_box="Products_box"
-                                            top="" >
-                                                                <div>
-                                                                    <img
-                                                                        class="image_resized"
-                                                                        style="
-                                                                            width: 100%;
-                                                                        "
-                                                                        src="<?= bloginfo("template_url"); ?>/omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/4d62b204-0e8a-47b9-8b56-8eae070e2e1c.jpg"
-                                                                        id="1840577571726192640"
-                                                                    />
-                                                                </div>
-                                                                <div
-                                                                    class="max-width-1600"
-                                                                    style="
-                                                                        top: 50px;
-                                                                    "
-                                                                    max-width-1600=""
-                                                                >
-                                                                    <p>
-                                                                        <span
-                                                                            style="
-                                                                                color: #000000;
-                                                                                font-size: 48px;
-                                                                            "
-                                                                            ><strong
-                                                                                >Multi-output</strong
-                                                                            ></span
-                                                                        >
-                                                                    </p>
-                                                                    <h5
-                                                                        style="
-                                                                            text-align: center;
-                                                                        "
-                                                                    >
-                                                                        <span
-                                                                            style="
-                                                                                color: #000000;
-                                                                                font-size: 20px;
-                                                                            "
-                                                                            ><span
-                                                                                style="
-                                                                                    line-height: 1;
-                                                                                "
-                                                                                >3
-                                                                                выхода
-                                                                                постоянного
-                                                                                тока
-                                                                                +
-                                                                                1
-                                                                                выход
-                                                                                USB
-                                                                                позволяют
-                                                                                подключать
-                                                                                4
-                                                                                и
-                                                                                более
-                                                                                устройств</span
-                                                                            ></span
-                                                                        >
-                                                                    </h5>
-                                                                </div>
-                                        </div>
-                                        <div class="Products_box top"
-                                            products_box="Products_box"
-                                            top="" >
-                                                                    <div>
-                                                                        <img
-                                                                            class="image_resized"
-                                                                            style="
-                                                                                width: 100%;
-                                                                            "
-                                                                            src="<?= bloginfo("template_url"); ?>/omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/ad52ef18-ecb7-4ddc-b2da-637ed1c2bec2.jpg"
-                                                                            id="1840577550339436544"
-                                                                        />
-                                                                    </div>
-                                                                    <div
-                                                                        class="max-width-1600"
-                                                                        style="
-                                                                            top: 50px;
-                                                                        "
-                                                                        max-width-1600=""
-                                                                    >
-                                                                        <p>
-                                                                            <span
-                                                                                style="
-                                                                                    color: #000000;
-                                                                                    font-size: 48px;
-                                                                                "
-                                                                                ><strong
-                                                                                    >Защита
-                                                                                    от
-                                                                                    пожара</strong
-                                                                                ></span
-                                                                            >
-                                                                        </p>
-                                                                        <h5
-                                                                            style="
-                                                                                text-align: center;
-                                                                            "
-                                                                        >
-                                                                            <span
-                                                                                style="
-                                                                                    font-size: 20px;
-                                                                                "
-                                                                                >Корпус
-                                                                                устройства
-                                                                                с
-                                                                                классом
-                                                                                огнестойкости
-                                                                                V-0
-                                                                                обеспечивает
-                                                                                безопасность
-                                                                                вас
-                                                                                и
-                                                                                вашего
-                                                                                имущества</span
-                                                                            >
-                                                                        </h5>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> -->
+                                        
                                     </div>
                                 </li>
                             </ul>
@@ -977,771 +624,6 @@
                                     <div class="">
                                         <div class="p_list">
                                             <div class="cbox-50 p_loopitem">
-                                                <!-- <div class="e_foldItem-52 border showDetail"
-                                                    needjs="true" >
-                                                    <div class="bg-light p_ask">
-                                                        <span class="p_asktitle"
-                                                            >Умный мини-ИБП
-                                                            серии DC
-                                                            UPS-KP3</span
-                                                        >
-                                                        <i class="p_arrow"></i>
-                                                    </div>
-                                                    <div
-                                                        class="border-top p_answer"
-                                                    >
-                                                        <div
-                                                            class="text-body p_answerCon saf-mo-table"
-                                                        >
-                                                            <link
-                                                                href="https://m2cdn.fastindexs.com/npmanager/static/lib/ckeditor5/preview.css?v=1.3.045"
-                                                                rel="stylesheet"
-                                                            />
-                                                            <figure
-                                                                class="table"
-                                                                style="
-                                                                    width: 100%;
-                                                                "
-                                                            >
-                                                                <table
-                                                                    class="ck-table-resized"
-                                                                >
-                                                                    <colgroup>
-                                                                        <col
-                                                                            style="
-                                                                                width: 11.85%;
-                                                                            "
-                                                                        />
-                                                                        <col
-                                                                            style="
-                                                                                width: 9.43%;
-                                                                            "
-                                                                        />
-                                                                        <col
-                                                                            style="
-                                                                                width: 20.05%;
-                                                                            "
-                                                                        />
-                                                                        <col
-                                                                            style="
-                                                                                width: 19.29%;
-                                                                            "
-                                                                        />
-                                                                        <col
-                                                                            style="
-                                                                                width: 19.3%;
-                                                                            "
-                                                                        />
-                                                                        <col
-                                                                            style="
-                                                                                width: 20.08%;
-                                                                            "
-                                                                        />
-                                                                    </colgroup>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td
-                                                                                class="et2"
-                                                                                colspan="2"
-                                                                            >
-                                                                                <span
-                                                                                    style="
-                                                                                        font-size: 16px;
-                                                                                    "
-                                                                                    >Модель</span
-                                                                                >
-                                                                            </td>
-                                                                            <td
-                                                                                class="et3"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                KP3S
-                                                                            </td>
-                                                                            <td
-                                                                                class="et3"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                KP3
-                                                                                EC
-                                                                            </td>
-                                                                            <td
-                                                                                class="et3"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                KP3
-                                                                            </td>
-                                                                            <td
-                                                                                class="et4"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                KP3
-                                                                                Pro
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td
-                                                                                class="et2"
-                                                                                colspan="2"
-                                                                            >
-                                                                                <span
-                                                                                    style="
-                                                                                        font-size: 16px;
-                                                                                    "
-                                                                                    >Емкость
-                                                                                    батареи</span
-                                                                                >
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                36Wh
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                30.24Wh
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                36Wh
-                                                                            </td>
-                                                                            <td
-                                                                                class="et7"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                36Wh
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td
-                                                                                class="et2"
-                                                                                colspan="2"
-                                                                            >
-                                                                                <span
-                                                                                    style="
-                                                                                        font-size: 16px;
-                                                                                    "
-                                                                                    >Тип
-                                                                                    батареи</span
-                                                                                >
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                colspan="4"
-                                                                                rowspan="1"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                Lithium-ion
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td
-                                                                                class="et2"
-                                                                                colspan="2"
-                                                                            >
-                                                                                <span
-                                                                                    style="
-                                                                                        font-size: 16px;
-                                                                                    "
-                                                                                    >Спецификация
-                                                                                    батареи</span
-                                                                                >
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                3.6V
-                                                                                /
-                                                                                10000mAh
-                                                                                (2500mAh*4)
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                3.6V
-                                                                                /
-                                                                                8400mAh
-                                                                                (4200mAh*2)
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                3.6V
-                                                                                /
-                                                                                10000mAh
-                                                                                (2500mAh*4)
-                                                                            </td>
-                                                                            <td
-                                                                                class="et7"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                3.6V
-                                                                                /
-                                                                                10000mAh
-                                                                                (2500mAh*4)
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td
-                                                                                class="et2"
-                                                                                colspan="2"
-                                                                            >
-                                                                                <span
-                                                                                    style="
-                                                                                        font-size: 16px;
-                                                                                    "
-                                                                                    >Материал</span
-                                                                                >
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                colspan="4"
-                                                                                rowspan="1"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                ABS
-                                                                                +
-                                                                                PC
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td
-                                                                                class="et2"
-                                                                                colspan="2"
-                                                                            >
-                                                                                <span
-                                                                                    style="
-                                                                                        font-size: 16px;
-                                                                                    "
-                                                                                    >Вход</span
-                                                                                >
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                DC
-                                                                                12V
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                DC
-                                                                                12V
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                DC
-                                                                                12V
-                                                                                /
-                                                                                2.0A
-                                                                            </td>
-                                                                            <td
-                                                                                class="et7"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                DC
-                                                                                12V
-                                                                                /
-                                                                                4.0A
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td
-                                                                                class="et2"
-                                                                                colspan="2"
-                                                                                rowspan="4"
-                                                                            >
-                                                                                <span
-                                                                                    style="
-                                                                                        font-size: 16px;
-                                                                                    "
-                                                                                    >Выход</span
-                                                                                >
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                DC
-                                                                                12V
-                                                                                /
-                                                                                1.5A
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                DC
-                                                                                1:
-                                                                                12V
-                                                                                /
-                                                                                1.5A&nbsp;
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                DC
-                                                                                1:
-                                                                                12V
-                                                                                /
-                                                                                1.5A&nbsp;
-                                                                            </td>
-                                                                            <td
-                                                                                class="et7"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                DC
-                                                                                1:
-                                                                                12V
-                                                                                /
-                                                                                3.0A&nbsp;
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                 
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                DC
-                                                                                2:&nbsp;
-                                                                                9V
-                                                                                /
-                                                                                2.0A&nbsp;
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                DC
-                                                                                2:&nbsp;
-                                                                                9V
-                                                                                /
-                                                                                2.0A&nbsp;
-                                                                            </td>
-                                                                            <td
-                                                                                class="et7"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                DC
-                                                                                2:
-                                                                                9V
-                                                                                /
-                                                                                1.0A&nbsp;
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                 
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                DC
-                                                                                3:&nbsp;
-                                                                                5V
-                                                                                /
-                                                                                2.0A&nbsp;
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                DC
-                                                                                3:&nbsp;
-                                                                                5V
-                                                                                /
-                                                                                2.0A&nbsp;
-                                                                            </td>
-                                                                            <td
-                                                                                class="et7"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                DC
-                                                                                3:
-                                                                                5V
-                                                                                /
-                                                                                2.0A&nbsp;
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                 
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                USB:&nbsp;
-                                                                                5V
-                                                                                /
-                                                                                2.0A&nbsp;
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                USB:&nbsp;
-                                                                                5V
-                                                                                /
-                                                                                2.0A&nbsp;
-                                                                            </td>
-                                                                            <td
-                                                                                class="et7"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                USB:
-                                                                                5V
-                                                                                /
-                                                                                2.0A&nbsp;
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td
-                                                                                class="et2"
-                                                                                colspan="2"
-                                                                            >
-                                                                                <span
-                                                                                    style="
-                                                                                        font-size: 16px;
-                                                                                    "
-                                                                                    >Общий
-                                                                                    выход&nbsp;</span
-                                                                                >
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                18W
-                                                                                (макс.)
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                18W
-                                                                                (макс.)
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                18W
-                                                                                (макс.)
-                                                                            </td>
-                                                                            <td
-                                                                                class="et7"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                36W
-                                                                                (макс.)
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td
-                                                                                class="et2"
-                                                                                colspan="2"
-                                                                            >
-                                                                                <span
-                                                                                    style="
-                                                                                        font-size: 16px;
-                                                                                    "
-                                                                                    >Чистый
-                                                                                    вес</span
-                                                                                >
-                                                                            </td>
-                                                                            <td
-                                                                                class="et12"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                274g
-                                                                            </td>
-                                                                            <td
-                                                                                class="et12"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                278g
-                                                                            </td>
-                                                                            <td
-                                                                                class="et12"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                278g
-                                                                            </td>
-                                                                            <td
-                                                                                class="et13"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                293g
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td
-                                                                                class="et2"
-                                                                                colspan="2"
-                                                                            >
-                                                                                <span
-                                                                                    style="
-                                                                                        font-size: 16px;
-                                                                                    "
-                                                                                    >Размеры
-                                                                                    устройства</span
-                                                                                >
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                colspan="4"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                115
-                                                                                *
-                                                                                83
-                                                                                *
-                                                                                27mm
-                                                                                (Д*Ш*В)
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td
-                                                                                class="et14"
-                                                                                rowspan="2"
-                                                                            >
-                                                                                <span
-                                                                                    style="
-                                                                                        font-size: 16px;
-                                                                                    "
-                                                                                    >Рабочая
-                                                                                    температура</span
-                                                                                >
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                Режим
-                                                                                ИБП
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                colspan="4"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                0℃&nbsp;–
-                                                                                40℃
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td
-                                                                                class="et6"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                Режим
-                                                                                батареи
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                colspan="4"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                -15℃&nbsp;–
-                                                                                50℃
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td
-                                                                                class="et2"
-                                                                                colspan="2"
-                                                                            >
-                                                                                <span
-                                                                                    style="
-                                                                                        font-size: 16px;
-                                                                                    "
-                                                                                    >Рабочая
-                                                                                    влажность</span
-                                                                                >
-                                                                            </td>
-                                                                            <td
-                                                                                class="et6"
-                                                                                colspan="4"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                Менее
-                                                                                75%RH
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td
-                                                                                class="et15"
-                                                                                colspan="2"
-                                                                            >
-                                                                                <span
-                                                                                    style="
-                                                                                        font-size: 16px;
-                                                                                    "
-                                                                                    >Хранение</span
-                                                                                >
-                                                                            </td>
-                                                                            <td
-                                                                                class="et16"
-                                                                                colspan="4"
-                                                                                style="
-                                                                                    text-align: center;
-                                                                                "
-                                                                            >
-                                                                                15℃&nbsp;–
-                                                                                35℃,
-                                                                                40
-                                                                                –
-                                                                                75%RH
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </figure>
-                                                            <p>
-                                                                <span
-                                                                    style="
-                                                                        font-family: Microsoft
-                                                                            YaHei;
-                                                                    "
-                                                                    >&nbsp;
-                                                                    &nbsp;Спецификации
-                                                                    могут
-                                                                    изменяться
-                                                                    без
-                                                                    предварительного
-                                                                    уведомления,
-                                                                    все чертежи
-                                                                    продукта
-                                                                    предназначены
-                                                                    только для
-                                                                    справки.</span
-                                                                ><br /> 
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
                                                 <?php if( have_rows('characteristics') ): ?>
                                                     <?php while( have_rows('characteristics') ): the_row(); 
                                                         $charTitle = get_sub_field('char-title');
@@ -1766,31 +648,30 @@
                                                                 rel="stylesheet"
                                                             />
                                                             <?= get_sub_field('grid') ?>
-                                                            <!-- <p>
-                                                                <span
-                                                                    style="
-                                                                        font-family: Microsoft
-                                                                            YaHei;
-                                                                    "
-                                                                    >&nbsp;
-                                                                    &nbsp;Спецификации
-                                                                    могут
-                                                                    изменяться
-                                                                    без
-                                                                    предварительного
-                                                                    уведомления,
-                                                                    все чертежи
-                                                                    продукта
-                                                                    предназначены
-                                                                    только для
-                                                                    справки.</span
-                                                                ><br /> 
-                                                            </p> -->
                                                         </div>
                                                     </div>
-                                                </div>
-                                                    
+                                                    </div>
+                                                        
                                                     <?php endwhile; ?>
+                                                <?php else: ?>
+                                                    <div class="cbox-50-1 p_nodata">
+                                                        <div class="saf-nodata">
+                                                            <span>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="65.364" viewBox="0 0 100 65.364">
+                                                                    <path id="nodata" d="M10,44.667h1.347a.667.667,0,0,1,.653.667.656.656,0,0,1-.653.667H10v1.347A.667.667,0,0,1,9.333,48a.656.656,0,0,1-.667-.653V46H7.32a.667.667,0,0,1-.653-.667.656.656,0,0,1,.653-.667H8.667V43.32a.667.667,0,0,1,.667-.653A.656.656,0,0,1,10,43.32Zm88-5.333V37.987a.656.656,0,0,0-.667-.653.667.667,0,0,0-.667.653v1.347H95.32a.656.656,0,0,0-.653.667.668.668,0,0,0,.653.667h1.347v1.347a.656.656,0,0,0,.667.653A.667.667,0,0,0,98,42.013V40.667h1.347A.656.656,0,0,0,100,40a.667.667,0,0,0-.653-.667Zm-48.437,22H16a1.333,1.333,0,0,1,0-2.667h6.047a5.3,5.3,0,0,1-.709-2.66V17.327A5.329,5.329,0,0,1,26.672,12h3.995V10.66a5.329,5.329,0,0,1,5.339-5.327H67.995a5.327,5.327,0,0,1,5.339,5.327V49.34A5.3,5.3,0,0,1,72.623,52H80a1.333,1.333,0,1,1,0,2.667H64v1.34a5.3,5.3,0,0,1-.711,2.66H64a1.333,1.333,0,0,1,0,2.667H56.989a2.667,2.667,0,0,1-4.18,3.247Zm4.875-2.667h4.24a2.658,2.658,0,0,0,2.656-2.673V17.264a2.582,2.582,0,0,0-2.573-2.6H26.573A2.585,2.585,0,0,0,24,17.264V55.993a2.672,2.672,0,0,0,2.655,2.673h20.24l-.685-.687a2.661,2.661,0,0,1-.693-2.577l-1.259-1.26a9.349,9.349,0,1,1,1.885-1.885l1.26,1.26a2.657,2.657,0,0,1,2.577.692ZM64,52h4.012a2.668,2.668,0,0,0,2.655-2.667V10.667A2.658,2.658,0,0,0,68.012,8H35.987a2.668,2.668,0,0,0-2.653,2.667V12H58.661A5.327,5.327,0,0,1,64,17.327ZM17,3h1.987a1,1,0,1,1,0,2H17V6.987a1,1,0,1,1-2,0V5H13.013a1,1,0,1,1,0-2H15V1.013a1,1,0,1,1,2,0V3ZM1.333,60a1.337,1.337,0,0,1,1.329-1.333h8.008a1.333,1.333,0,0,1,0,2.667H2.663A1.328,1.328,0,0,1,1.333,60Zm42.048-8.619a6.668,6.668,0,1,0-9.429,0,6.668,6.668,0,0,0,9.429,0ZM29.333,20a1.333,1.333,0,0,1,1.332-1.333H45.333a1.333,1.333,0,0,1,0,2.667H30.667A1.329,1.329,0,0,1,29.333,20Zm0,6.667a1.329,1.329,0,0,1,1.324-1.333H52.009a1.333,1.333,0,0,1,0,2.667H30.657a1.325,1.325,0,0,1-1.324-1.333Zm0,6.667A1.332,1.332,0,0,1,30.664,32H40a1.333,1.333,0,0,1,0,2.667H30.664a1.328,1.328,0,0,1-1.331-1.333ZM4,25.333a4,4,0,1,1,4-4,4,4,0,0,1-4,4Zm0-2a2,2,0,1,0-2-2,2,2,0,0,0,2,2Zm82.667-6a4,4,0,1,1,4-4,4,4,0,0,1-4,4Zm0-2a2,2,0,1,0-2-2A2,2,0,0,0,86.667,15.333Z"></path>
+                                                                </svg>
+                                                            </span>
+                                                            <div class="saf-pop">
+                                                                <p style="text-align: center;">
+                                                                    <span style="line-height:1.5;">
+                                                                        <span style="font-size:18px;">
+                                                                            <strong>Извините, текущая колонка обновляется<br>Пожалуйста, оставайтесь настроенной!</strong>
+                                                                        </span>
+                                                                    </span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 <?php endif; ?>
 
                                             </div>
@@ -1850,13 +731,18 @@
                                                     $file_path = get_attached_file($file_id);
                                                     $file_size = $file_path ? filesize($file_path) : 0;
                                                     
-                                                    // Конвертируем размер в KB
-                                                    $file_size_kb = $file_size > 0 ? round($file_size / 1024, 1) : 0;
+                                                    // Форматируем размер файла с единицами измерения
+                                                    $file_size_display = $file_size > 0 
+                                                        ? ($file_size > 1024 * 1024 
+                                                            ? round($file_size / (1024 * 1024), 1) . ' MB' 
+                                                            : round($file_size / 1024, 1) . ' KB'
+                                                        ) 
+                                                        : '0 KB';
                                                 } else {
                                                     $file_url = '#';
-                                                    $file_size_kb = 0;
+                                                    $file_size_display = '0 KB';
                                                 }
-                                            ?>
+                                                ?>
                                                 
                                                 <div class="cbox-57 p_loopitem">
                                                     <div class="e_container-59 s_layout">
@@ -1919,7 +805,7 @@
                                                                                 p-id="19298"
                                                                             ></path>
                                                                         </svg>
-                                                                        <?= $file_size_kb; ?>KB
+                                                                        <?= $file_size_display; ?>
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -1928,6 +814,25 @@
                                                 </div>
                                                 
                                             <?php endwhile; ?>
+                                            <?php else: ?>
+                                            <div class="cbox-50-1 p_nodata">
+                                                <div class="saf-nodata">
+                                                    <span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="65.364" viewBox="0 0 100 65.364">
+                                                            <path id="nodata" d="M10,44.667h1.347a.667.667,0,0,1,.653.667.656.656,0,0,1-.653.667H10v1.347A.667.667,0,0,1,9.333,48a.656.656,0,0,1-.667-.653V46H7.32a.667.667,0,0,1-.653-.667.656.656,0,0,1,.653-.667H8.667V43.32a.667.667,0,0,1,.667-.653A.656.656,0,0,1,10,43.32Zm88-5.333V37.987a.656.656,0,0,0-.667-.653.667.667,0,0,0-.667.653v1.347H95.32a.656.656,0,0,0-.653.667.668.668,0,0,0,.653.667h1.347v1.347a.656.656,0,0,0,.667.653A.667.667,0,0,0,98,42.013V40.667h1.347A.656.656,0,0,0,100,40a.667.667,0,0,0-.653-.667Zm-48.437,22H16a1.333,1.333,0,0,1,0-2.667h6.047a5.3,5.3,0,0,1-.709-2.66V17.327A5.329,5.329,0,0,1,26.672,12h3.995V10.66a5.329,5.329,0,0,1,5.339-5.327H67.995a5.327,5.327,0,0,1,5.339,5.327V49.34A5.3,5.3,0,0,1,72.623,52H80a1.333,1.333,0,1,1,0,2.667H64v1.34a5.3,5.3,0,0,1-.711,2.66H64a1.333,1.333,0,0,1,0,2.667H56.989a2.667,2.667,0,0,1-4.18,3.247Zm4.875-2.667h4.24a2.658,2.658,0,0,0,2.656-2.673V17.264a2.582,2.582,0,0,0-2.573-2.6H26.573A2.585,2.585,0,0,0,24,17.264V55.993a2.672,2.672,0,0,0,2.655,2.673h20.24l-.685-.687a2.661,2.661,0,0,1-.693-2.577l-1.259-1.26a9.349,9.349,0,1,1,1.885-1.885l1.26,1.26a2.657,2.657,0,0,1,2.577.692ZM64,52h4.012a2.668,2.668,0,0,0,2.655-2.667V10.667A2.658,2.658,0,0,0,68.012,8H35.987a2.668,2.668,0,0,0-2.653,2.667V12H58.661A5.327,5.327,0,0,1,64,17.327ZM17,3h1.987a1,1,0,1,1,0,2H17V6.987a1,1,0,1,1-2,0V5H13.013a1,1,0,1,1,0-2H15V1.013a1,1,0,1,1,2,0V3ZM1.333,60a1.337,1.337,0,0,1,1.329-1.333h8.008a1.333,1.333,0,0,1,0,2.667H2.663A1.328,1.328,0,0,1,1.333,60Zm42.048-8.619a6.668,6.668,0,1,0-9.429,0,6.668,6.668,0,0,0,9.429,0ZM29.333,20a1.333,1.333,0,0,1,1.332-1.333H45.333a1.333,1.333,0,0,1,0,2.667H30.667A1.329,1.329,0,0,1,29.333,20Zm0,6.667a1.329,1.329,0,0,1,1.324-1.333H52.009a1.333,1.333,0,0,1,0,2.667H30.657a1.325,1.325,0,0,1-1.324-1.333Zm0,6.667A1.332,1.332,0,0,1,30.664,32H40a1.333,1.333,0,0,1,0,2.667H30.664a1.328,1.328,0,0,1-1.331-1.333ZM4,25.333a4,4,0,1,1,4-4,4,4,0,0,1-4,4Zm0-2a2,2,0,1,0-2-2,2,2,0,0,0,2,2Zm82.667-6a4,4,0,1,1,4-4,4,4,0,0,1-4,4Zm0-2a2,2,0,1,0-2-2A2,2,0,0,0,86.667,15.333Z"></path>
+                                                        </svg>
+                                                    </span>
+                                                    <div class="saf-pop">
+                                                        <p style="text-align: center;">
+                                                            <span style="line-height:1.5;">
+                                                                <span style="font-size:18px;">
+                                                                    <strong>Извините, текущая колонка обновляется<br>Пожалуйста, оставайтесь настроенной!</strong>
+                                                                </span>
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         <?php endif; ?>
                                             
                                         </div>
@@ -2035,4 +940,95 @@
                     name="propJson"
                     value='{"prompt_65":"","prompt_66":"","prompt_63":"","pageConfig_64":{"pcColumn":1,"loopItem":".p_loopItem","pcRow":1,"moColumn":1,"datasourceid":"","elementid":64},"prompt_68":"","value2_24":"","needjs":true,"value5_24":"","prompt_54":"","prompt_56":"","zoom_27":-1,"page_57":{"size":6,"from":0,"totalCount":100},"value1_24":"","page_50":{"size":6,"from":0,"totalCount":100},"value4_24":"","href_89":{"transport":[],"type":"page","value":{"pageId":"b7936057-c3b3-40b9-81a4-1b0c5955eb89","hash":""},"target":"_self"},"status_48":true,"fd360_27":false,"showDefault_41":false,"value7_24":"","videoFd_27":false,"prompt_18":"9999+","value6_24":"","href_68":{"type":"none","value":"","target":""},"href_66":{"transport":[],"type":"field","value":"_href","target":"_self"},"href_65":{"type":"none","value":"","target":""},"href_63":{"transport":[],"type":"field","value":"_href","target":"_self"},"href_62":{"type":"none","value":"","target":""},"value10_24":"","value9_24":"","dense_54":"","dense_56":"","value8_24":"","href_48":{"transport":[],"type":"dialog-interact","value":"1711095708841","target":"_self"},"href_46":{"type":"none","value":"","target":""},"href_44":{"type":"none","value":"","target":""},"dense_65":"","style_41":"style","dense_63":"","dense_68":"","dense_66":"","pageConfig_57":{"showJump":true,"marquee":{"navigation":true,"marqueeTime":4,"scrollType":"horizontal","opp":false},"filterPosition":"","moColumn":1,"rolling":{"navigation":true,"pageStyle":1,"scrollType":"horizontal","pagenation":true,"scrollTime":4,"autoScroll":true,"speed":600},"pageType":"hidden","singleTotal":0,"showButtom":false,"showTotal":false,"pcColumn":1,"loopItem":".p_loopitem","status":true,"pcRow":10,"datasourceid":"datasource5","elementid":57},"href_3":{"type":"none","value":"","target":""},"value3_24":"","status_89":true,"pageConfig_50":{"showJump":true,"marquee":{"navigation":true,"marqueeTime":4,"scrollType":"horizontal","opp":false},"filterPosition":"","moColumn":1,"rolling":{"navigation":true,"pageStyle":1,"scrollType":"horizontal","pagenation":true,"scrollTime":4,"autoScroll":true,"speed":600},"pageType":"hidden","singleTotal":0,"showButtom":false,"showTotal":false,"pcColumn":1,"loopItem":".p_loopitem","status":true,"pcRow":8,"datasourceid":"datasource4","elementid":50},"thumbPosition_27":"bottom","href_56":{"type":"none","value":"","target":""},"href_54":{"type":"none","value":"","target":""},"href_52":{"type":"none","value":"","target":""}}'
                 />
+            </div>
+            <div id="c_popbox-1711095708841" style="display: none; margin: -260.32px auto 0px;" class="response-animated fixed"><div class="pop_wrapper" id="contentId" bg-close="false" auto-play="false">
+                <div class="p_container">
+                    <a href="javascript:;" class="p_close"><svg t="1610353588925" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5295" width="200" height="200"><path d="M798.72 225.73511147a44.78293333 44.78293333 0 0 0-31.85777813-13.19822294c-11.83288853 0-23.66577813 5.00622187-31.85777707 13.19822294L512 447.82933333 289.45066667 225.28a44.78293333 44.78293333 0 0 0-31.85777814-13.19822187c-11.83288853 0-23.66577813 5.00622187-32.31288853 13.19822187a45.32906667 45.32906667 0 0 0 0 64.17066667L447.82933333 512 225.28 734.54933333a45.32906667 45.32906667 0 1 0 64.17066667 64.17066667L512 576.17066667l222.54933333 222.54933333a45.32906667 45.32906667 0 1 0 64.17066667-64.17066667L576.17066667 512l222.54933333-222.54933333c17.29422187-17.29422187 17.29422187-46.42133333 0-63.7155552z" p-id="5296"></path></svg></a>
+
+                    <div class="p_content pop-content" id="content_box-1711095708841">
+                    <div id="c_form_064-1711095717005" class="response-animated">
+                <div class="e_container-14 s_layout mw response-transition">
+                    <div class="cbox-14-0 p_item"><form class="e_form-1 s_layout messforma response-transition" needjs="true">
+                    <div class="cbox-1"><div class="e_input-26 s_form1 form-group" needjs="true" data-pagelink="" hidden="" style="">
+                    <label class="p_label">
+                        <span class="s_label">Адрес источника</span>
+                    </label>
+                    <div class="">
+                        <div class="input-group">
+                            <input type="text" class="form-control s_form-control s_input p_input" name="text" data-name="e_input-26" placeholder="">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div><div class="e_input-27 s_form1 form-group" needjs="true" data-pagename="" hidden="" style="">
+                    <label class="p_label">
+                        <span class="s_label">Страница источника</span>
+                    </label>
+                    <div class="">
+                        <div class="input-group">
+                            <input type="text" class="form-control s_form-control s_input p_input" name="text" data-name="e_input-27" placeholder="">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div><div class="e_clueName-23 s_form1 form-group response-transition" needjs="true" required="">
+                    <label class="p_label">
+                        <span class="s_label">Имя</span>
+                    </label>
+                    <div class="">
+                        <div class="input-group">
+                            <input type="text" class="form-control s_form-control s_input p_input" name="name1711095872177" data-name="e_clueName-23" placeholder="Пожалуйста введите ваше имя">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div><div class="e_clueName-30 s_form1 form-group response-transition" needjs="true" required="">
+                    <label class="p_label">
+                        <span class="s_label">Страна/Регион:</span>
+                    </label>
+                    <div class="">
+                        <div class="input-group">
+                            <input type="text" class="form-control s_form-control s_input p_input" name="name1712044155340" data-name="e_clueName-30" placeholder="Пожалуйста введите вашу страну/регион">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div><div class="e_clueName-29 s_form1 form-group response-transition" needjs="true" required="">
+                    <label class="p_label">
+                        <span class="s_label">Мобильный телефон</span>
+                    </label>
+                    <div class="">
+                        <div class="input-group">
+                            <input type="text" class="form-control s_form-control s_input p_input" name="name1711095872177" data-name="e_clueName-29" placeholder="Пожалуйста введите свой номер телефона">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div><div class="e_clueEmail-25 s_form1 form-group response-transition" needjs="true" required="">
+                    <label class="p_label">
+                        <span class="s_label">Электронная почта</span>
+                    </label>
+                    <div class="">
+                        <div class="input-group">
+                            <input type="text" class="form-control s_form-control s_input p_input" name="email1711095920712" data-name="e_clueEmail-25" placeholder="Пожалуйста введите Ваш адрес электронной почты">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div><div class="e_textarea-5 s_form1 form-group response-transition" needjs="true" required="">
+                    <label class="p_label">
+                        <span class="s_label">Содержание сообщения</span>
+                    </label>
+                    <div class="">
+                        <textarea class="form-control s_form-control s_input p_input is-invalid" rows="3" name="e_textarea-5" placeholder="Пожалуйста, введите содержание вашего сообщения"></textarea>
+                        <div class="invalid-feedback">Пожалуйста,&nbsp;введите&nbsp;содержание</div>
+                    </div>
+                </div>
+                <a class="e_formBtn-22 s_button1 btn btn-primary response-transition" href="javascript:;" needjs="true">
+                    <span>Отправить сообщение</span> 
+                </a></div>
+                    <input name="jumpPage" type="hidden" value="/successfully.html">
+                    <input name="i18nJson" type="hidden" value="{&quot;minLength_25&quot;:&quot;Вводимое&nbsp;содержание&nbsp;не&nbsp;может&nbsp;быть&nbsp;меньше&nbsp;%len&nbsp;символов&quot;,&quot;required_26&quot;:&quot;Пожалуйста,&nbsp;введите&nbsp;содержание&quot;,&quot;required_5&quot;:&quot;Пожалуйста,&nbsp;введите&nbsp;содержание&quot;,&quot;minLength_26&quot;:&quot;Вводимое&nbsp;содержание&nbsp;не&nbsp;может&nbsp;быть&nbsp;меньше&nbsp;%len&nbsp;символов&quot;,&quot;required_27&quot;:&quot;Пожалуйста,&nbsp;введите&nbsp;содержание&quot;,&quot;minLength_5&quot;:&quot;Вводимое&nbsp;содержание&nbsp;не&nbsp;может&nbsp;быть&nbsp;меньше&nbsp;%len&nbsp;символов&quot;,&quot;minLength_23&quot;:&quot;Вводимое&nbsp;содержание&nbsp;не&nbsp;может&nbsp;быть&nbsp;меньше&nbsp;%len&nbsp;символов&quot;,&quot;required_29&quot;:&quot;Пожалуйста,&nbsp;введите&nbsp;содержание&quot;,&quot;minLength_29&quot;:&quot;Вводимое&nbsp;содержание&nbsp;не&nbsp;может&nbsp;быть&nbsp;меньше&nbsp;%len&nbsp;символов&quot;,&quot;required_23&quot;:&quot;Пожалуйста,&nbsp;введите&nbsp;содержание&quot;,&quot;minLength_27&quot;:&quot;Вводимое&nbsp;содержание&nbsp;не&nbsp;может&nbsp;быть&nbsp;меньше&nbsp;%len&nbsp;символов&quot;,&quot;required_25&quot;:&quot;Пожалуйста,&nbsp;введите&nbsp;содержание&quot;,&quot;maxLength_5&quot;:&quot;Не&nbsp;допускается&nbsp;вводить&nbsp;более&nbsp;%len&nbsp;символов&quot;,&quot;minLength_30&quot;:&quot;Вводимое&nbsp;содержание&nbsp;не&nbsp;может&nbsp;быть&nbsp;меньше&nbsp;%len&nbsp;символов&quot;,&quot;maxLength_30&quot;:&quot;Не&nbsp;допускается&nbsp;вводить&nbsp;более&nbsp;%len&nbsp;символов&quot;,&quot;maxLength_23&quot;:&quot;Не&nbsp;допускается&nbsp;вводить&nbsp;более&nbsp;%len&nbsp;символов&quot;,&quot;maxLength_27&quot;:&quot;Не&nbsp;допускается&nbsp;вводить&nbsp;более&nbsp;%len&nbsp;символов&quot;,&quot;required_30&quot;:&quot;Пожалуйста,&nbsp;введите&nbsp;содержание&quot;,&quot;maxLength_26&quot;:&quot;Не&nbsp;допускается&nbsp;вводить&nbsp;более&nbsp;%len&nbsp;символов&quot;,&quot;maxLength_25&quot;:&quot;Не&nbsp;допускается&nbsp;вводить&nbsp;более&nbsp;%len&nbsp;символов&quot;,&quot;maxLength_29&quot;:&quot;Не&nbsp;допускается&nbsp;вводить&nbsp;более&nbsp;%len&nbsp;символов&quot;}">
+                </form>
+                </div>
+                </div>
+                <input type="hidden" name="propJson" value="{&quot;submit_1&quot;:{&quot;obj2&quot;:{&quot;type&quot;:&quot;customPage&quot;,&quot;value&quot;:{&quot;type&quot;:&quot;link&quot;,&quot;params&quot;:[],&quot;value&quot;:&quot;/successfully.html&quot;},&quot;target&quot;:&quot;_self&quot;},&quot;obj1&quot;:{&quot;result&quot;:1,&quot;request&quot;:[],&quot;promptTime&quot;:0,&quot;prompt&quot;:&quot;Подать успешно!&quot;},&quot;logic&quot;:[],&quot;type&quot;:2,&quot;obj3&quot;:{}},&quot;enterSubmit_5&quot;:false,&quot;showPlaceholder_30&quot;:true,&quot;business_22&quot;:[],&quot;value_30&quot;:&quot;&quot;,&quot;state_26&quot;:&quot;normal&quot;,&quot;value_26&quot;:&quot;&quot;,&quot;datasource_30&quot;:{},&quot;state_27&quot;:&quot;normal&quot;,&quot;value_27&quot;:&quot;&quot;,&quot;state_25&quot;:&quot;normal&quot;,&quot;value_25&quot;:&quot;&quot;,&quot;state_29&quot;:&quot;normal&quot;,&quot;value_29&quot;:&quot;&quot;,&quot;value_5&quot;:&quot;&quot;,&quot;validate_5&quot;:{&quot;minLength&quot;:{&quot;msg&quot;:&quot;您输入的内容不能少于%len个字符&quot;,&quot;state&quot;:false,&quot;value&quot;:5},&quot;custom&quot;:{&quot;msg&quot;:&quot;&quot;,&quot;reg&quot;:&quot;&quot;,&quot;state&quot;:false},&quot;required&quot;:{&quot;msg&quot;:&quot;内容不能为空&quot;,&quot;state&quot;:true,&quot;value&quot;:true},&quot;maxLength&quot;:{&quot;msg&quot;:&quot;您输入的内容不能多于%len个字符&quot;,&quot;state&quot;:false,&quot;value&quot;:128}},&quot;sourceUuid_1&quot;:&quot;1451427134953357312&quot;,&quot;datasource_29&quot;:{},&quot;action_22&quot;:1,&quot;state_23&quot;:&quot;normal&quot;,&quot;value_23&quot;:&quot;&quot;,&quot;type_23&quot;:&quot;text&quot;,&quot;ddItem_23&quot;:{},&quot;type_22&quot;:1,&quot;ddItem_25&quot;:{},&quot;label_27&quot;:&quot;Страница источника&quot;,&quot;label_29&quot;:&quot;Мобильный телефон&quot;,&quot;type_29&quot;:&quot;text&quot;,&quot;type_27&quot;:&quot;text&quot;,&quot;basic_1&quot;:{&quot;submitLimit&quot;:{&quot;unit&quot;:1,&quot;count&quot;:1,&quot;interval&quot;:1,&quot;peopleLimit&quot;:1,&quot;limitRule&quot;:1},&quot;submitTime&quot;:{&quot;limit&quot;:2,&quot;startTime&quot;:&quot;&quot;,&quot;endTime&quot;:&quot;&quot;,&quot;prompt&quot;:&quot;&quot;},&quot;formInfo&quot;:{&quot;app&quot;:&quot;120113&quot;,&quot;name&quot;:&quot;Message&quot;,&quot;title&quot;:&quot;在线留言&quot;},&quot;advanced&quot;:{&quot;customState&quot;:[],&quot;message&quot;:1}},&quot;type_25&quot;:&quot;email&quot;,&quot;type_26&quot;:&quot;text&quot;,&quot;label_23&quot;:&quot;Имя&quot;,&quot;label_25&quot;:&quot;Электронная почта&quot;,&quot;label_26&quot;:&quot;Адрес источника&quot;,&quot;state_30&quot;:&quot;normal&quot;,&quot;validate_30&quot;:{&quot;minLength&quot;:{&quot;msg&quot;:&quot;您输入的内容不能少于%len个字符&quot;,&quot;state&quot;:false,&quot;value&quot;:5},&quot;custom&quot;:{&quot;msg&quot;:&quot;&quot;,&quot;reg&quot;:&quot;&quot;,&quot;state&quot;:false},&quot;required&quot;:{&quot;msg&quot;:&quot;内容不能为空&quot;,&quot;value&quot;:true},&quot;maxLength&quot;:{&quot;msg&quot;:&quot;您输入的内容不能多于%len个字符&quot;,&quot;state&quot;:false,&quot;value&quot;:128}},&quot;ddItem_26&quot;:{},&quot;ddItem_27&quot;:{},&quot;customParam_30&quot;:&quot;&quot;,&quot;ddItem_29&quot;:{},&quot;showPlaceholder_5&quot;:true,&quot;ddItem_30&quot;:{},&quot;validate_29&quot;:{&quot;minLength&quot;:{&quot;msg&quot;:&quot;您输入的内容不能少于%len个字符&quot;,&quot;state&quot;:false,&quot;value&quot;:5},&quot;custom&quot;:{&quot;msg&quot;:&quot;&quot;,&quot;reg&quot;:&quot;&quot;,&quot;state&quot;:false},&quot;required&quot;:{&quot;msg&quot;:&quot;内容不能为空&quot;,&quot;value&quot;:true},&quot;maxLength&quot;:{&quot;msg&quot;:&quot;您输入的内容不能多于%len个字符&quot;,&quot;state&quot;:false,&quot;value&quot;:128}},&quot;validate_27&quot;:{&quot;minLength&quot;:{&quot;msg&quot;:&quot;您输入的内容不能少于%len个字符&quot;,&quot;state&quot;:false,&quot;value&quot;:5},&quot;custom&quot;:{&quot;msg&quot;:&quot;&quot;,&quot;reg&quot;:&quot;&quot;,&quot;state&quot;:false},&quot;required&quot;:{&quot;msg&quot;:&quot;内容不能为空&quot;,&quot;value&quot;:false},&quot;maxLength&quot;:{&quot;msg&quot;:&quot;您输入的内容不能多于%len个字符&quot;,&quot;state&quot;:false,&quot;value&quot;:128}},&quot;validate_26&quot;:{&quot;minLength&quot;:{&quot;msg&quot;:&quot;您输入的内容不能少于%len个字符&quot;,&quot;state&quot;:false,&quot;value&quot;:5},&quot;custom&quot;:{&quot;msg&quot;:&quot;&quot;,&quot;reg&quot;:&quot;&quot;,&quot;state&quot;:false},&quot;required&quot;:{&quot;msg&quot;:&quot;内容不能为空&quot;,&quot;value&quot;:false},&quot;maxLength&quot;:{&quot;msg&quot;:&quot;您输入的内容不能多于%len个字符&quot;,&quot;state&quot;:false,&quot;value&quot;:128}},&quot;validate_25&quot;:{&quot;minLength&quot;:{&quot;msg&quot;:&quot;您输入的内容不能少于%len个字符&quot;,&quot;state&quot;:false,&quot;value&quot;:5},&quot;custom&quot;:{&quot;msg&quot;:&quot;&quot;,&quot;reg&quot;:&quot;&quot;,&quot;state&quot;:false},&quot;required&quot;:{&quot;msg&quot;:&quot;内容不能为空&quot;,&quot;value&quot;:true},&quot;maxLength&quot;:{&quot;msg&quot;:&quot;您输入的内容不能多于%len个字符&quot;,&quot;state&quot;:false,&quot;value&quot;:128}},&quot;validate_23&quot;:{&quot;minLength&quot;:{&quot;msg&quot;:&quot;您输入的内容不能少于%len个字符&quot;,&quot;state&quot;:false,&quot;value&quot;:5},&quot;custom&quot;:{&quot;msg&quot;:&quot;&quot;,&quot;reg&quot;:&quot;&quot;,&quot;state&quot;:false},&quot;required&quot;:{&quot;msg&quot;:&quot;内容不能为空&quot;,&quot;value&quot;:true},&quot;maxLength&quot;:{&quot;msg&quot;:&quot;您输入的内容不能多于%len个字符&quot;,&quot;state&quot;:false,&quot;value&quot;:128}},&quot;customParam_27&quot;:&quot;&quot;,&quot;customParam_29&quot;:&quot;&quot;,&quot;async_1&quot;:{&quot;status&quot;:1,&quot;target&quot;:&quot;clue&quot;,&quot;relation&quot;:[{&quot;from&quot;:&quot;e_input-2&quot;,&quot;to&quot;:&quot;contactName&quot;},{&quot;from&quot;:&quot;e_input-4&quot;,&quot;to&quot;:&quot;email&quot;},{&quot;from&quot;:&quot;e_input-3&quot;,&quot;to&quot;:&quot;phone&quot;}]},&quot;customParam_23&quot;:&quot;&quot;,&quot;customParam_26&quot;:&quot;&quot;,&quot;customParam_25&quot;:&quot;&quot;,&quot;rule_1&quot;:[],&quot;initType_30&quot;:1,&quot;placeholder_25&quot;:&quot;Пожалуйста введите Ваш адрес электронной почты&quot;,&quot;placeholder_23&quot;:&quot;Пожалуйста введите ваше имя&quot;,&quot;placeholder_29&quot;:&quot;Пожалуйста введите свой номер телефона&quot;,&quot;label_5&quot;:&quot;Содержание сообщения&quot;,&quot;prompt_22&quot;:&quot;&quot;,&quot;placeholder_27&quot;:&quot;&quot;,&quot;placeholder_26&quot;:&quot;&quot;,&quot;enterSubmit_30&quot;:false,&quot;ddItem_5&quot;:{},&quot;enterSubmit_27&quot;:false,&quot;enterSubmit_29&quot;:false,&quot;type_30&quot;:&quot;text&quot;,&quot;enterSubmit_23&quot;:false,&quot;enterSubmit_26&quot;:false,&quot;enterSubmit_25&quot;:false,&quot;placeholder_30&quot;:&quot;Пожалуйста введите вашу страну/регион&quot;,&quot;label_30&quot;:&quot;Страна/Регион:&quot;,&quot;showLabel_5&quot;:true,&quot;cuname_23&quot;:&quot;name1711095872177&quot;,&quot;cuname_27&quot;:&quot;text&quot;,&quot;cuname_26&quot;:&quot;text&quot;,&quot;cuname_25&quot;:&quot;email1711095920712&quot;,&quot;formId_1&quot;:&quot;1035680153120890880&quot;,&quot;datasource_27&quot;:{},&quot;initType_5&quot;:1,&quot;datasource_26&quot;:{},&quot;datasource_25&quot;:{},&quot;cuname_29&quot;:&quot;name1711095872177&quot;,&quot;datasource_23&quot;:{},&quot;showLabel_30&quot;:true,&quot;cuname_30&quot;:&quot;name1712044155340&quot;,&quot;showPlaceholder_29&quot;:true,&quot;datasource_5&quot;:{},&quot;initType_23&quot;:1,&quot;initType_29&quot;:1,&quot;state_5&quot;:&quot;normal&quot;,&quot;initType_26&quot;:1,&quot;initType_25&quot;:1,&quot;initType_27&quot;:1,&quot;placeholder_5&quot;:&quot;Пожалуйста, введите содержание вашего сообщения&quot;,&quot;notice_1&quot;:{&quot;rules&quot;:[{&quot;code&quot;:&quot;submit&quot;,&quot;mail&quot;:&quot;&quot;,&quot;phone&quot;:&quot;&quot;,&quot;title&quot;:&quot;表单提交成功&quot;,&quot;user&quot;:2}],&quot;status&quot;:1},&quot;showPlaceholder_23&quot;:true,&quot;showLabel_23&quot;:true,&quot;showLabel_25&quot;:true,&quot;showLabel_26&quot;:true,&quot;showPlaceholder_27&quot;:true,&quot;showLabel_27&quot;:true,&quot;showPlaceholder_25&quot;:true,&quot;showPlaceholder_26&quot;:true,&quot;showLabel_29&quot;:true}"></div></div>
+                </div>
+                <div class="p_background" style="background-color:rgba(0, 0, 0, 0.7)"></div>
+                </div>
+
             </div>

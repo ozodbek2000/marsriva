@@ -355,15 +355,32 @@
                             ds-id=""
                             elem-id="e_loop-2"
                         >
-                            <div class="">
-                                <div class="p_list">
-                                    <?php
+                        <div class="">
+                            <div class="p_list">
+                                <?php
                                     if (class_exists('WooCommerce')) {
+                                        // Получаем текущий термин (категорию)
+                                        $current_term = get_queried_object();
+                                        
+                                        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+                                        
                                         $args = [
                                             'post_type' => 'product',
                                             'posts_per_page' => 12,
-                                            'paged' => (get_query_var('paged')) ? get_query_var('paged') : 1,
+                                            'paged' => $paged,
                                         ];
+                                        
+                                        // Если мы находимся на странице категории товаров
+                                        if (is_product_category()) {
+                                            $args['tax_query'] = [
+                                                [
+                                                    'taxonomy' => 'product_cat',
+                                                    'field' => 'term_id',
+                                                    'terms' => $current_term->term_id,
+                                                    'include_children' => false,
+                                                ]
+                                            ];
+                                        }
 
                                         $loop = new WP_Query($args);
 
@@ -375,14 +392,22 @@
                                                         <div class="cbox-3-0 p_item">
                                                             <div class="e_image-4 s_img">
                                                                 <a href="<?php the_permalink(); ?>" target="_self">
-                                                                    <img src="<?php echo wp_get_attachment_url($product->get_image_id()); ?>" alt="<?php the_title(); ?>" title="<?php the_title(); ?>" />
+                                                                    <?php if ($product->get_image_id()) : ?>
+                                                                        <img src="<?php echo wp_get_attachment_url($product->get_image_id()); ?>" alt="<?php the_title(); ?>" title="<?php the_title(); ?>" />
+                                                                    <?php else : ?>
+                                                                        <img src="<?php echo wc_placeholder_img_src(); ?>" alt="<?php the_title(); ?>" />
+                                                                    <?php endif; ?>
                                                                 </a>
                                                             </div>
                                                             <div class="e_container-10 s_layout">
                                                                 <div class="cbox-10-0 p_item">
                                                                     <p class="e_text-6 s_title"><?php the_title(); ?></p>
-                                                                    <p class="e_text-8 s_title"><?php echo $product->get_price_html(); ?></p>
-                                                                    <p class="e_text-11 s_description"><?php echo wp_trim_words($product->get_short_description(), 20, '...'); ?></p>
+                                                                    <?php if ($product->get_price()) : ?>
+                                                                        <p class="e_text-8 s_title"><?php echo $product->get_price_html(); ?></p>
+                                                                    <?php endif; ?>
+                                                                    <?php if ($product->get_short_description()) : ?>
+                                                                        <p class="e_text-11 s_description"><?php echo wp_trim_words($product->get_short_description(), 20, '...'); ?></p>
+                                                                    <?php endif; ?>
                                                                     <a class="e_button-9 s_button1 btn btn-primary" href="<?php the_permalink(); ?>" target="_self">
                                                                         <span>Узнать больше &gt;</span>
                                                                     </a>
@@ -397,750 +422,51 @@
                                             echo '<p>Товары не найдены.</p>';
                                         }
                                     }
+                                ?>
+                            </div>
+                            
+                            <div class="p_page">
+                                <div class="page_con">
+                                    <?php
+                                    if (class_exists('WooCommerce') && isset($loop)) {
+                                        $total_pages = $loop->max_num_pages;
+                                        $current_page = max(1, get_query_var('paged'));
+                                        
+                                        if ($total_pages > 1) {
+                                            $base_url = get_term_link($current_term);
+                                            
+                                            // Кнопка "Предыдущая"
+                                            if ($current_page > 1) {
+                                                $prev_url = ($current_page - 1 == 1) ? $base_url : trailingslashit($base_url) . 'page/' . ($current_page - 1) . '/';
+                                                echo '<a href="' . esc_url($prev_url) . '" class="page_a page_prev">&lt;</a>';
+                                            } else {
+                                                echo '<a href="javascript:;" class="page_a page_prev disabled">&lt;</a>';
+                                            }
+                                            
+                                            // Номера страниц
+                                            for ($i = 1; $i <= $total_pages; $i++) {
+                                                if ($i == $current_page) {
+                                                    echo '<a class="page_a page_num current" href="javascript:;">' . $i . '</a>';
+                                                } else {
+                                                    $page_url = ($i == 1) ? $base_url : trailingslashit($base_url) . 'page/' . $i . '/';
+                                                    echo '<a class="page_a page_num" href="' . esc_url($page_url) . '">' . $i . '</a>';
+                                                }
+                                            }
+                                            
+                                            // Кнопка "Следующая"
+                                            if ($current_page < $total_pages) {
+                                                $next_url = trailingslashit($base_url) . 'page/' . ($current_page + 1) . '/';
+                                                echo '<a href="' . esc_url($next_url) . '" class="page_a page_next">&gt;</a>';
+                                            } else {
+                                                echo '<a href="javascript:;" class="page_a page_next disabled">&gt;</a>';
+                                            }
+                                        }
+                                    }
                                     ?>
-                                    <div class="cbox-2 p_loopitem">
-                                        <div class="e_container-3 s_layout">
-                                            <div class="cbox-3-0 p_item">
-                                                <div class="e_image-4 s_img">
-                                                    <a
-                                                        href="../Products_details/335.html"
-                                                        target="_self"
-                                                    >
-                                                        <img
-                                                            src="https://omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/0f1d92fd-7abe-4a0c-ae41-e20ebc304c1a.jpg"
-                                                            alt="MR-SPF1.2K-LP1-TL20E"
-                                                            title="MR-SPF1.2K-LP1-TL20E"
-                                                            la="la"
-                                                            needthumb="true"
-                                                        />
-                                                    </a>
-                                                </div>
-                                                <div
-                                                    class="e_container-10 s_layout"
-                                                >
-                                                    <div
-                                                        class="cbox-10-0 p_item"
-                                                    >
-                                                        <p
-                                                            class="e_text-13 s_title"
-                                                        ></p>
-                                                        <p
-                                                            class="e_text-6 s_title"
-                                                        >
-                                                            MR-SPF1.2K-LP1-TL20E
-                                                        </p>
-                                                        <p
-                                                            class="e_text-8 s_title"
-                                                        >
-                                                            Однофазный — IP20 —
-                                                            Высокочастотный
-                                                        </p>
-                                                        <p
-                                                            class="e_text-11 s_title"
-                                                        >
-                                                            Номинальная
-                                                            мощность: 1.2кВт
-                                                        </p>
-                                                        <a
-                                                            class="e_button-9 s_button1 btn btn-primary"
-                                                            href="../Products_details/335.html"
-                                                            target="_self"
-                                                        >
-                                                            <span
-                                                                >Узнать
-                                                                больше&gt;</span
-                                                            >
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cbox-2 p_loopitem">
-                                        <div class="e_container-3 s_layout">
-                                            <div class="cbox-3-0 p_item">
-                                                <div class="e_image-4 s_img">
-                                                    <a
-                                                        href="../Products_details/337.html"
-                                                        target="_self"
-                                                    >
-                                                        <img
-                                                            src="https://omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/9efd4e9c-1780-452f-bce3-00191030a768.jpg"
-                                                            alt="MR-SPF3.6K-LP1-TL20E"
-                                                            title="MR-SPF3.6K-LP1-TL20E"
-                                                            la="la"
-                                                            needthumb="true"
-                                                        />
-                                                    </a>
-                                                </div>
-                                                <div
-                                                    class="e_container-10 s_layout"
-                                                >
-                                                    <div
-                                                        class="cbox-10-0 p_item"
-                                                    >
-                                                        <p
-                                                            class="e_text-13 s_title"
-                                                        ></p>
-                                                        <p
-                                                            class="e_text-6 s_title"
-                                                        >
-                                                            MR-SPF3.6K-LP1-TL20E
-                                                        </p>
-                                                        <p
-                                                            class="e_text-8 s_title"
-                                                        >
-                                                            Однофазный — IP20 —
-                                                            Высокая частота
-                                                        </p>
-                                                        <p
-                                                            class="e_text-11 s_title"
-                                                        >
-                                                            RATED POWER: 3.6kVA
-                                                            / 3.6kW
-                                                        </p>
-                                                        <a
-                                                            class="e_button-9 s_button1 btn btn-primary"
-                                                            href="../Products_details/337.html"
-                                                            target="_self"
-                                                        >
-                                                            <span
-                                                                >Узнать
-                                                                больше&gt;</span
-                                                            >
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cbox-2 p_loopitem">
-                                        <div class="e_container-3 s_layout">
-                                            <div class="cbox-3-0 p_item">
-                                                <div class="e_image-4 s_img">
-                                                    <a
-                                                        href="../Products_details/331.html"
-                                                        target="_self"
-                                                    >
-                                                        <img
-                                                            src="https://omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/934a7988-906a-4fc4-a0f5-d4da97b4169d.jpg"
-                                                            alt="MR-SPF5K-LP1-TL20E"
-                                                            title="MR-SPF5K-LP1-TL20E"
-                                                            la="la"
-                                                            needthumb="true"
-                                                        />
-                                                    </a>
-                                                </div>
-                                                <div
-                                                    class="e_container-10 s_layout"
-                                                >
-                                                    <div
-                                                        class="cbox-10-0 p_item"
-                                                    >
-                                                        <p
-                                                            class="e_text-13 s_title"
-                                                        ></p>
-                                                        <p
-                                                            class="e_text-6 s_title"
-                                                        >
-                                                            MR-SPF5K-LP1-TL20E
-                                                        </p>
-                                                        <p
-                                                            class="e_text-8 s_title"
-                                                        >
-                                                            Однофазный — IP20 —
-                                                            Высокая частота
-                                                        </p>
-                                                        <p
-                                                            class="e_text-11 s_title"
-                                                        >
-                                                            Номинальная
-                                                            мощность: 5кВт
-                                                        </p>
-                                                        <a
-                                                            class="e_button-9 s_button1 btn btn-primary"
-                                                            href="../Products_details/331.html"
-                                                            target="_self"
-                                                        >
-                                                            <span
-                                                                >Узнать
-                                                                больше&gt;</span
-                                                            >
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cbox-2 p_loopitem">
-                                        <div class="e_container-3 s_layout">
-                                            <div class="cbox-3-0 p_item">
-                                                <div class="e_image-4 s_img">
-                                                    <a
-                                                        href="../Products_details/330.html"
-                                                        target="_self"
-                                                    >
-                                                        <img
-                                                            src="https://omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/934a7988-906a-4fc4-a0f5-d4da97b4169d.jpg"
-                                                            alt="MR-SPF6.5K-LP1-TL20E"
-                                                            title="MR-SPF6.5K-LP1-TL20E"
-                                                            la="la"
-                                                            needthumb="true"
-                                                        />
-                                                    </a>
-                                                </div>
-                                                <div
-                                                    class="e_container-10 s_layout"
-                                                >
-                                                    <div
-                                                        class="cbox-10-0 p_item"
-                                                    >
-                                                        <p
-                                                            class="e_text-13 s_title"
-                                                        ></p>
-                                                        <p
-                                                            class="e_text-6 s_title"
-                                                        >
-                                                            MR-SPF6.5K-LP1-TL20E
-                                                        </p>
-                                                        <p
-                                                            class="e_text-8 s_title"
-                                                        >
-                                                            Однофазный — IP20 —
-                                                            Высокочастотный
-                                                        </p>
-                                                        <p
-                                                            class="e_text-11 s_title"
-                                                        >
-                                                            Номинальная
-                                                            мощность: 6.5кВт
-                                                        </p>
-                                                        <a
-                                                            class="e_button-9 s_button1 btn btn-primary"
-                                                            href="../Products_details/330.html"
-                                                            target="_self"
-                                                        >
-                                                            <span
-                                                                >Узнать
-                                                                больше&gt;</span
-                                                            >
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cbox-2 p_loopitem">
-                                        <div class="e_container-3 s_layout">
-                                            <div class="cbox-3-0 p_item">
-                                                <div class="e_image-4 s_img">
-                                                    <a
-                                                        href="../Products_details/232.html"
-                                                        target="_self"
-                                                    >
-                                                        <img
-                                                            src="https://omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/ab17e30b-04b8-482c-81f9-506f36d92770.jpg"
-                                                            alt="MR-SPF8000M TWIN (версия 1)"
-                                                            title="MR-SPF8000M TWIN (версия 1)"
-                                                            la="la"
-                                                            needthumb="true"
-                                                        />
-                                                    </a>
-                                                </div>
-                                                <div
-                                                    class="e_container-10 s_layout"
-                                                >
-                                                    <div
-                                                        class="cbox-10-0 p_item"
-                                                    >
-                                                        <p
-                                                            class="e_text-13 s_title"
-                                                        ></p>
-                                                        <p
-                                                            class="e_text-6 s_title"
-                                                        >
-                                                            MR-SPF8000M TWIN
-                                                            (версия 1)
-                                                        </p>
-                                                        <p
-                                                            class="e_text-8 s_title"
-                                                        >
-                                                            Однофазный - IP20 -
-                                                            Высокая частота
-                                                        </p>
-                                                        <p
-                                                            class="e_text-11 s_title"
-                                                        >
-                                                            Номинальная
-                                                            мощность: 8 кВт
-                                                        </p>
-                                                        <a
-                                                            class="e_button-9 s_button1 btn btn-primary"
-                                                            href="../Products_details/232.html"
-                                                            target="_self"
-                                                        >
-                                                            <span
-                                                                >Узнать
-                                                                больше&gt;</span
-                                                            >
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cbox-2 p_loopitem">
-                                        <div class="e_container-3 s_layout">
-                                            <div class="cbox-3-0 p_item">
-                                                <div class="e_image-4 s_img">
-                                                    <a
-                                                        href="../Products_details/231.html"
-                                                        target="_self"
-                                                    >
-                                                        <img
-                                                            src="https://omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/ab17e30b-04b8-482c-81f9-506f36d92770.jpg"
-                                                            alt="MR-SPF11000M TWIN (версия 1)"
-                                                            title="MR-SPF11000M TWIN (версия 1)"
-                                                            la="la"
-                                                            needthumb="true"
-                                                        />
-                                                    </a>
-                                                </div>
-                                                <div
-                                                    class="e_container-10 s_layout"
-                                                >
-                                                    <div
-                                                        class="cbox-10-0 p_item"
-                                                    >
-                                                        <p
-                                                            class="e_text-13 s_title"
-                                                        ></p>
-                                                        <p
-                                                            class="e_text-6 s_title"
-                                                        >
-                                                            MR-SPF11000M TWIN
-                                                            (версия 1)
-                                                        </p>
-                                                        <p
-                                                            class="e_text-8 s_title"
-                                                        >
-                                                            Однофазный - IP20 -
-                                                            Высокая частота
-                                                        </p>
-                                                        <p
-                                                            class="e_text-11 s_title"
-                                                        >
-                                                            Номинальная
-                                                            мощность: 11 кВт
-                                                        </p>
-                                                        <a
-                                                            class="e_button-9 s_button1 btn btn-primary"
-                                                            href="../Products_details/231.html"
-                                                            target="_self"
-                                                        >
-                                                            <span
-                                                                >Узнать
-                                                                больше&gt;</span
-                                                            >
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cbox-2 p_loopitem">
-                                        <div class="e_container-3 s_layout">
-                                            <div class="cbox-3-0 p_item">
-                                                <div class="e_image-4 s_img">
-                                                    <a
-                                                        href="../Products_details/336.html"
-                                                        target="_self"
-                                                    >
-                                                        <img
-                                                            src="https://omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/f997fa06-7d87-48fe-9552-9744e9dc3aba.jpg"
-                                                            alt="MR-SPF12K-LP1-TL20E"
-                                                            title="MR-SPF12K-LP1-TL20E"
-                                                            la="la"
-                                                            needthumb="true"
-                                                        />
-                                                    </a>
-                                                </div>
-                                                <div
-                                                    class="e_container-10 s_layout"
-                                                >
-                                                    <div
-                                                        class="cbox-10-0 p_item"
-                                                    >
-                                                        <p
-                                                            class="e_text-13 s_title"
-                                                        ></p>
-                                                        <p
-                                                            class="e_text-6 s_title"
-                                                        >
-                                                            MR-SPF12K-LP1-TL20E
-                                                        </p>
-                                                        <p
-                                                            class="e_text-8 s_title"
-                                                        >
-                                                            Однофазный — IP20 —
-                                                            Высокочастотный
-                                                        </p>
-                                                        <p
-                                                            class="e_text-11 s_title"
-                                                        >
-                                                            Номинальная
-                                                            мощность: 12кВт
-                                                        </p>
-                                                        <a
-                                                            class="e_button-9 s_button1 btn btn-primary"
-                                                            href="../Products_details/336.html"
-                                                            target="_self"
-                                                        >
-                                                            <span
-                                                                >Узнать
-                                                                больше&gt;</span
-                                                            >
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cbox-2 p_loopitem">
-                                        <div class="e_container-3 s_layout">
-                                            <div class="cbox-3-0 p_item">
-                                                <div class="e_image-4 s_img">
-                                                    <a
-                                                        href="../Products_details/332.html"
-                                                        target="_self"
-                                                    >
-                                                        <img
-                                                            src="https://omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/83ba5e6f-39ac-4402-9cff-6eb428640b21.jpg"
-                                                            alt="MR-SPH6.6К-LP1-TL65E"
-                                                            title="MR-SPH6.6К-LP1-TL65E"
-                                                            la="la"
-                                                            needthumb="true"
-                                                        />
-                                                    </a>
-                                                </div>
-                                                <div
-                                                    class="e_container-10 s_layout"
-                                                >
-                                                    <div
-                                                        class="cbox-10-0 p_item"
-                                                    >
-                                                        <p
-                                                            class="e_text-13 s_title"
-                                                        ></p>
-                                                        <p
-                                                            class="e_text-6 s_title"
-                                                        >
-                                                            MR-SPH6.6К-LP1-TL65E
-                                                        </p>
-                                                        <p
-                                                            class="e_text-8 s_title"
-                                                        >
-                                                            Однофазный — IP66 —
-                                                            Высокая частота
-                                                        </p>
-                                                        <p
-                                                            class="e_text-11 s_title"
-                                                        >
-                                                            Номинальная
-                                                            мощность: 6.6кВт
-                                                        </p>
-                                                        <a
-                                                            class="e_button-9 s_button1 btn btn-primary"
-                                                            href="../Products_details/332.html"
-                                                            target="_self"
-                                                        >
-                                                            <span
-                                                                >Узнать
-                                                                больше&gt;</span
-                                                            >
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cbox-2 p_loopitem">
-                                        <div class="e_container-3 s_layout">
-                                            <div class="cbox-3-0 p_item">
-                                                <div class="e_image-4 s_img">
-                                                    <a
-                                                        href="../Products_details/333.html"
-                                                        target="_self"
-                                                    >
-                                                        <img
-                                                            src="https://omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/83ba5e6f-39ac-4402-9cff-6eb428640b21.jpg"
-                                                            alt="MR-SPH8.6К-LP1-TL65E"
-                                                            title="MR-SPH8.6К-LP1-TL65E"
-                                                            la="la"
-                                                            needthumb="true"
-                                                        />
-                                                    </a>
-                                                </div>
-                                                <div
-                                                    class="e_container-10 s_layout"
-                                                >
-                                                    <div
-                                                        class="cbox-10-0 p_item"
-                                                    >
-                                                        <p
-                                                            class="e_text-13 s_title"
-                                                        ></p>
-                                                        <p
-                                                            class="e_text-6 s_title"
-                                                        >
-                                                            MR-SPH8.6К-LP1-TL65E
-                                                        </p>
-                                                        <p
-                                                            class="e_text-8 s_title"
-                                                        >
-                                                            Однофазный — IP66 —
-                                                            Высокочастотный
-                                                        </p>
-                                                        <p
-                                                            class="e_text-11 s_title"
-                                                        >
-                                                            Номинальная
-                                                            мощность: 8.6кВт
-                                                        </p>
-                                                        <a
-                                                            class="e_button-9 s_button1 btn btn-primary"
-                                                            href="../Products_details/333.html"
-                                                            target="_self"
-                                                        >
-                                                            <span
-                                                                >Узнать
-                                                                больше&gt;</span
-                                                            >
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cbox-2 p_loopitem">
-                                        <div class="e_container-3 s_layout">
-                                            <div class="cbox-3-0 p_item">
-                                                <div class="e_image-4 s_img">
-                                                    <a
-                                                        href="../Products_details/334.html"
-                                                        target="_self"
-                                                    >
-                                                        <img
-                                                            src="https://omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/83ba5e6f-39ac-4402-9cff-6eb428640b21.jpg"
-                                                            alt="MR-SPH10.6K-LP1-TL65E"
-                                                            title="MR-SPH10.6K-LP1-TL65E"
-                                                            la="la"
-                                                            needthumb="true"
-                                                        />
-                                                    </a>
-                                                </div>
-                                                <div
-                                                    class="e_container-10 s_layout"
-                                                >
-                                                    <div
-                                                        class="cbox-10-0 p_item"
-                                                    >
-                                                        <p
-                                                            class="e_text-13 s_title"
-                                                        ></p>
-                                                        <p
-                                                            class="e_text-6 s_title"
-                                                        >
-                                                            MR-SPH10.6K-LP1-TL65E
-                                                        </p>
-                                                        <p
-                                                            class="e_text-8 s_title"
-                                                        >
-                                                            Однофазный — IP66 —
-                                                            Высокочастотный
-                                                        </p>
-                                                        <p
-                                                            class="e_text-11 s_title"
-                                                        >
-                                                            Номинальная
-                                                            мощность: 10.6кВт
-                                                        </p>
-                                                        <a
-                                                            class="e_button-9 s_button1 btn btn-primary"
-                                                            href="../Products_details/334.html"
-                                                            target="_self"
-                                                        >
-                                                            <span
-                                                                >Узнать
-                                                                больше&gt;</span
-                                                            >
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cbox-2 p_loopitem">
-                                        <div class="e_container-3 s_layout">
-                                            <div class="cbox-3-0 p_item">
-                                                <div class="e_image-4 s_img">
-                                                    <a
-                                                        href="../Products_details/1361441737636380672.html"
-                                                        target="_self"
-                                                    >
-                                                        <img
-                                                            src="https://omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/ddf53ddf-fbd5-4e53-a5cb-9a8ee678dd6e.jpg"
-                                                            alt="MR-SPH8K-LP3-TL65E"
-                                                            title="MR-SPH8K-LP3-TL65E"
-                                                            la="la"
-                                                            needthumb="true"
-                                                        />
-                                                    </a>
-                                                </div>
-                                                <div
-                                                    class="e_container-10 s_layout"
-                                                >
-                                                    <div
-                                                        class="cbox-10-0 p_item"
-                                                    >
-                                                        <p
-                                                            class="e_text-13 s_title"
-                                                        ></p>
-                                                        <p
-                                                            class="e_text-6 s_title"
-                                                        >
-                                                            MR-SPH8K-LP3-TL65E
-                                                        </p>
-                                                        <p
-                                                            class="e_text-8 s_title"
-                                                        >
-                                                            Трехфазный - IP65 -
-                                                            Высокая частота
-                                                        </p>
-                                                        <p
-                                                            class="e_text-11 s_title"
-                                                        >
-                                                            Номинальная
-                                                            мощность: 8 кВт
-                                                        </p>
-                                                        <a
-                                                            class="e_button-9 s_button1 btn btn-primary"
-                                                            href="../Products_details/1361441737636380672.html"
-                                                            target="_self"
-                                                        >
-                                                            <span
-                                                                >Узнать
-                                                                больше&gt;</span
-                                                            >
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cbox-2 p_loopitem">
-                                        <div class="e_container-3 s_layout">
-                                            <div class="cbox-3-0 p_item">
-                                                <div class="e_image-4 s_img">
-                                                    <a
-                                                        href="../Products_item_2/150.html"
-                                                        target="_self"
-                                                    >
-                                                        <img
-                                                            src="https://omo-oss-image.thefastimg.com/portal-saas/pg2025012411115407946/cms/image/76e9271b-4db4-453d-b658-8dcd2b7b9502.jpg"
-                                                            alt="MR-SPF1200"
-                                                            title="MR-SPF1200"
-                                                            la="la"
-                                                            needthumb="true"
-                                                        />
-                                                    </a>
-                                                </div>
-                                                <div
-                                                    class="e_container-10 s_layout"
-                                                >
-                                                    <div
-                                                        class="cbox-10-0 p_item"
-                                                    >
-                                                        <p
-                                                            class="e_text-13 s_title"
-                                                        ></p>
-                                                        <p
-                                                            class="e_text-6 s_title"
-                                                        >
-                                                            MR-SPF1200
-                                                        </p>
-                                                        <p
-                                                            class="e_text-8 s_title"
-                                                        >
-                                                            Однофазный - IP20 -
-                                                            Высокая частота
-                                                        </p>
-                                                        <p
-                                                            class="e_text-11 s_title"
-                                                        >
-                                                            Номинальная
-                                                            мощность: 1,2 кВт
-                                                        </p>
-                                                        <a
-                                                            class="e_button-9 s_button1 btn btn-primary"
-                                                            href="../Products_item_2/150.html"
-                                                            target="_self"
-                                                        >
-                                                            <span
-                                                                >Узнать
-                                                                больше&gt;</span
-                                                            >
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p_page">
-                                    <div class="page_con">
-                                        <a
-                                            href="javascript:;"
-                                            class="page_a page_prev disabled"
-                                            >&lt;</a
-                                        >
-                                        <a
-                                            class="page_a page_num current"
-                                            href="javascript:;"
-                                            >1</a
-                                        ><a
-                                            class="page_a page_num"
-                                            href="javascript:;"
-                                            >2</a
-                                        ><a
-                                            class="page_a page_num"
-                                            href="javascript:;"
-                                            >3</a
-                                        >
-                                        <a
-                                            href="javascript:;"
-                                            class="page_a page_next"
-                                            >&gt;</a
-                                        >
-                                    </div>
                                 </div>
                             </div>
-                            <input
-                                type="hidden"
-                                name="_config"
-                                value='{"ignoreEmptyCheck":true,"cname":"产品-产品列表","type":"list","params":{"size":12,"query":[{"filter":"ignore-empty-check","esField":"category.id","groupName":"数据展示条件,默认条件组","field":"categoryId","valueName":"","sourceType":"page","dataType":"string","logic":"and","groupBegin":"1,2","value":"1222952471572643840","operator":"eq"},{"filter":"ignore-empty-check","esField":"productName.keyword","groupEnd":"2,1","field":"title","sourceType":"page","valueName":"","dataType":"string","logic":"or","fieldType":"string","operator":"like"}],"header":{"Data-Query-Es-Field":"summary,deliveryDateDesc","Data-Query-Random":0,"Data-Query-Field":"summary,delivery"},"from":0,"sort":[],"_detailId":"1222952471572643840"},"valueUrl":"/fwebapi/product/datasource/143150160001/product/list/param/value","priority":0,"_dataFilter":{"filter":false,"showCondition":false,"conditionExclude":false,"showSearch":false,"currentConditionHide":false,"selectFirstCondition":false,"fields":[],"viscidityEnableShowAll":false,"cascaderEnable":false,"showSearchCname":"","viscidityEnable":false,"viscidityEnableShowFirst":false},"appId":"143150160001","sourceUuid":"d2f12f858d9f46eeb5b049baa1dffc37","pageParams":[{"code":"_detailId","name":"默认参数"},{"code":"Search","name":"搜索"}],"metaUrl":"/fwebapi/product/datasource/143150160001/product/list/meta","disabled":false,"api":"/fwebapi/product/product/es/findPage?appId&#x3D;143150160001&amp;templateId&#x3D;product","id":"datasource1","apiId":"product","reqKey":"/fwebapi/product/product/es/findPage?appId&#x3D;143150160001&amp;templateId&#x3D;product|{\"size\":12,\"query\":[{\"filter\":\"ignore-empty-check\",\"esField\":\"category.id\",\"groupName\":\"数据展示条件,默认条件组\",\"field\":\"categoryId\",\"valueName\":\"\",\"sourceType\":\"page\",\"dataType\":\"string\",\"logic\":\"and\",\"groupBegin\":\"1,2\",\"value\":\"1222952471572643840\",\"operator\":\"eq\"},{\"filter\":\"ignore-empty-check\",\"esField\":\"productName.keyword\",\"groupEnd\":\"2,1\",\"field\":\"title\",\"sourceType\":\"page\",\"valueName\":\"\",\"dataType\":\"string\",\"logic\":\"or\",\"fieldType\":\"string\",\"operator\":\"like\"}],\"header\":{\"Data-Query-Es-Field\":\"summary,deliveryDateDesc\",\"Data-Query-Random\":0,\"Data-Query-Field\":\"summary,delivery\"},\"from\":0,\"sort\":[],\"_detailId\":\"1222952471572643840\"}|{\"Data-Query-Es-Field\":\"summary,deliveryDateDesc\",\"Data-Query-Random\":0,\"Data-Query-Field\":\"summary,delivery\"}"}'
-                            />
-                            <input type="hidden" name="view" value="Products" />
-                            <input
-                                type="hidden"
-                                name="pageParamsJson"
-                                value='{"size":12,"from":0,"totalCount":32}'
-                            />
-                            <input
-                                type="hidden"
-                                name="i18nJson"
-                                value='{"confirm_2":"Подтвердить","loadMore_2":"Нажмите «загрузить еще»","loadNow_2":"Загрузка...","noMore_2":"Нет больше информации","clearConditions_2":"чистое состояние","pageItem_2":"шт.","noData_2":"Нет данных","totalAcount_2":"Всего Х","pageJump_2":"Перейти на","conditions_2":"условие:","pageWhole_2":"всего","pageUnit_2":"стр."}'
-                            />
+                        </div>
+                           
                         </div>
                     </div>
                 </div>
